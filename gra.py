@@ -5,34 +5,35 @@ from tkinter import *
 
 def word_count():
 
-    f = open("baza slow.txt", "r", encoding="utf-8")            # otwarcie pliku tekstowego
-    database = f.read().split()                                 # zapisanie każdego słowa w tablicy
+    f = open("baza slow.txt", "r", encoding="utf-8")            # otwarcie pliku tekstowego w trybie "r" - read
+    database = f.read().split()                                 # utworzenie tablicy i zapisanie do niej każdego słowa
+                                                                # z pliku "baza slow.txt"
 
                                                                 # Wyznaczenie ilości słów w poszczególnych poziomach trudności
-    easy = -1                                                   # odrzucenie słowa "łatwe"
-    medium = -1                                                 # odrzucenie słowa "średnie"
-    i = 0
+    easy_word_count = -1                                                   # -1 bo odrzucamy pole ze słowem "łatwe"
+    medium_word_count = -1                                                 # -1 bo odrzucamy pole ze słowem "średnie"
+    iterator = 0
 
-    while (database[i] != "Średnie:"):                          # przeliczenie słów z poziomu łatwego
-        easy += 1
-        i += 1
+    while (database[iterator] != "Średnie:"):                          # przeliczenie słów z poziomu łatwego
+        easy_word_count += 1
+        iterator += 1
 
-    while (database[i] != "Trudne:"):                           # przeliczenie słów z poziomu średniego
-        medium += 1
-        i += 1
+    while (database[iterator] != "Trudne:"):                           # przeliczenie słów z poziomu średniego
+        medium_word_count += 1
+        iterator += 1
 
-    hard = len(database) - easy - medium - 3                    # przeliczenie słow z poziomu łatwego
-    f.close()                                                   # zamknięcie pliku tekstowego
-    return database, easy, medium, hard
+    hard_word_count = len(database) - easy_word_count - medium_word_count - 3     # przeliczenie słow z poziomu trudnego
+    f.close()                                                                     # zamknięcie pliku tekstowego
+    return database, easy_word_count, medium_word_count, hard_word_count
 
 
 def check(frame, i, words):
     frame.destroy()
     print("dobrze jest")
-    return # powrót do odpowiedniego view
+    return                                                      # powrót do odpowiedniego view
 
 
-def view(frame, i, words, n):                                   # wyświetlanie po kliknięciu
+def view(frame, i, words, n):                                   # wyświetlanie słów w trybie "na ilość"
     print(words[0*n])
     frame.destroy()
     if n > 0:
@@ -53,7 +54,7 @@ def view(frame, i, words, n):                                   # wyświetlanie 
     return
 
 
-def view_on_time(frame, i, words, n, t):                           # wyświetlanie po czasie
+def view_on_time(frame, i, words, n, t):                           # wyświetlanie słów w trybie "na czas"
     frame.destroy()
     if n > 0:
         frame1 = Frame(window)
@@ -83,42 +84,42 @@ def draw(level, n):                                             # Losowanie n s�
 
 def zabawa(frame, level, mode):                                 # działanie gry
     frame.forget()
-    if mode == 1:
+    if mode == 1:                                               # jeśli tryb na ilość fiszek:
 
-        if level == 1:
+        if level == 1:                                              # poziom łatwy
             # dźwięk
-            words = draw(level, 3*flashcards[0])
+            words = draw(level, 3 * flashcards[0])
             for i in range(3):
                 view(frame, i, words[i*flashcards[0]:], flashcards[0])
 
-        elif level == 2:
+        elif level == 2:                                            # poziom średni
             # dźwięk
             words = draw(level, 3 * flashcards[1])
             for i in range(3):
                 view(frame, i, words[i*flashcards[1]:], flashcards[1])
 
-        elif level == 3:
+        elif level == 3:                                            # poziom trudny
             # dźwięk
             words = draw(level, 3 * flashcards[2])
             for i in range(3):
                 view(frame, i, words[i*flashcards[2]:], flashcards[2])
 
-    elif mode == 2:
+    elif mode == 2:                                             # jeśli tryb na czas:
         print("<krótka instrukcja>")
 
-        if level == 1:
+        if level == 1:                                              #poziom łatwy
             # dźwięk
             words = draw(level, 3 * on_time[0])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[0]:], on_time[0], T[0])
 
-        elif level == 2:
+        elif level == 2:                                            #poziom średni
             # dźwięk
             words = draw(level, 3 * on_time[1])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[1]:], on_time[1], T[1])
 
-        elif level == 3:
+        elif level == 3:                                            #poziom trudny
             # dźwięk
             words = draw(level, 3 * on_time[2])
             for i in range(3):
@@ -208,7 +209,7 @@ def begin():
 window = Tk()
 window.title("Gra w Memory")
 window.geometry("800x600")
-flashcards = [5, 8, 10]
+flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
 on_time = [5, 5, 7]
 T = [5, 3, 7]
 
