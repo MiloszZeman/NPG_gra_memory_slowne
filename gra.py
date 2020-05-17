@@ -28,7 +28,28 @@ def word_count():
 
 
 def check(frame, i, words):
+
     frame.destroy()
+
+    def save_and_clear():                                       # funkcja do czyszczenia i zapisywania pola wprowadzania
+        entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
+        entry_field.delete(0, END)                                  # wyczyść pole wspisywania
+
+    frame1 = Frame(window)
+    frame1.grid()
+
+    entered_words_array = []                                    # tablica słów wpisanych przez gracza
+
+    entry_label = Label(frame1, text="Wporwadz slowo:", font=("Arial", 24,))    # tekst "wrowadź słowo"
+    entry_label.grid()
+
+    entry_field = Entry(frame1)                                 #pole do wpisywania
+    entry_field.grid()
+
+    entry_field.bind("<Return>", lambda event: save_and_clear())            #enter do zapisania słowa
+    entry_field.bind("<F1>", lambda event: print(entered_words_array))      #f1 do wyświetlenie listy słów <dev_key>
+
+    frame1.mainloop()
     print("dobrze jest")
     return                                                      # powrót do odpowiedniego view
 
