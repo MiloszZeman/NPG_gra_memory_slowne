@@ -41,17 +41,15 @@ def enter_words(frame, i, words):
             entry_field.delete(0, END)                                  # wyczyść pole wspisywania
 
             if len(entered_words_array) == 5:                           # jeśli wszystkie słowa zostały wpisane
-                entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem
+                entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
                 entry_field.grid_remove()                               # usuń pole do wpisywania
-                entry_field.unbind("<Return>")                          # nie pozwalaj na użycie "enter"
+                entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
                 button_check = Button(frame1, text="Sprawdź odpowiedzi!",
-                                      command=lambda: check())  #przycisk prowadzący do sprawdzania
+                                      command=lambda: check())          #przycisk prowadzący do sprawdzania odpowiedzi
                 button_check.grid()
-            else:
+            else:                                                       # jeśli nie wszystkie słowa zostały wpisane
                 entry_label.configure(text="Wprowadź słowo " +
-                                   str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem
-
-
+                                   str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem wpisywania
 
     frame1 = Frame(window)
     frame1.grid()
@@ -59,14 +57,14 @@ def enter_words(frame, i, words):
     entered_words_array = []                                    #  utworzenie tablicy słów wpisanych przez gracza
 
     entry_label = Label(frame1, text="Wprowadź słowo " + str(1+len(entered_words_array)) + ":",
-                        font=("Arial", 24,))                    # tekst "wrowadź słowo"
+                        font=("Arial", 24,))                    # tekst "wprowadź słowo"
     entry_label.grid()
 
-    entry_field = Entry(frame1)                                 #pole do wpisywania
+    entry_field = Entry(frame1)                                 # pole do wpisywania
     entry_field.grid()
 
-    entry_field.bind("<Return>", lambda event: enter_pressed())            #enter do zapisania słowa
-    entry_field.bind("<F1>", lambda event: print(entered_words_array))      #f1 do wyświetlenie listy słów <dev_key>
+    entry_field.bind("<Return>", lambda event: enter_pressed())            # "enter" do zapisania słowa
+    entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
 
     frame1.mainloop()
     print("dobrze jest")
