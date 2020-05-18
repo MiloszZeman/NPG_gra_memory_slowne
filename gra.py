@@ -1,4 +1,4 @@
-import random
+﻿import random
 import time
 from tkinter import *
 
@@ -44,7 +44,7 @@ def enter_words(frame, i, words):
                 entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem
                 entry_field.grid_remove()                               # usuń pole do wpisywania
                 entry_field.unbind("<Return>")                          # nie pozwalaj na użycie "enter"
-                button_check = Button(frame1, text="Sprawdź",
+                button_check = Button(frame1, text="Sprawdź odpowiedzi!",
                                       command=lambda: check())  #przycisk prowadzący do sprawdzania
                 button_check.grid()
             else:
