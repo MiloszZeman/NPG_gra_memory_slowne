@@ -27,26 +27,45 @@ def word_count():
     return database, easy_word_count, medium_word_count, hard_word_count
 
 
-def check(frame, i, words):
+def check():
+    print("weszło")
+    return
+
+
+def enter_words(frame, i, words):
 
     frame.destroy()
 
-    def save_and_clear():                                       # funkcja do czyszczenia i zapisywania pola wprowadzania
-        entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
-        entry_field.delete(0, END)                                  # wyczyść pole wspisywania
+    def enter_pressed():                                       # funkcja do czyszczenia i zapisywania pola wprowadzania
+            entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
+            entry_field.delete(0, END)                                  # wyczyść pole wspisywania
+
+            if len(entered_words_array) == 5:                           # jeśli wszystkie słowa zostały wpisane
+                entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem
+                entry_field.grid_remove()                               # usuń pole do wpisywania
+                entry_field.unbind("<Return>")                          # nie pozwalaj na użycie "enter"
+                button_check = Button(frame1, text="Sprawdź",
+                                      command=lambda: check())  #przycisk prowadzący do sprawdzania
+                button_check.grid()
+            else:
+                entry_label.configure(text="Wprowadź słowo " +
+                                   str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem
+
+
 
     frame1 = Frame(window)
     frame1.grid()
 
-    entered_words_array = []                                    # tablica słów wpisanych przez gracza
+    entered_words_array = []                                    #  utworzenie tablicy słów wpisanych przez gracza
 
-    entry_label = Label(frame1, text="Wporwadz slowo:", font=("Arial", 24,))    # tekst "wrowadź słowo"
+    entry_label = Label(frame1, text="Wprowadź słowo " + str(1+len(entered_words_array)) + ":",
+                        font=("Arial", 24,))                    # tekst "wrowadź słowo"
     entry_label.grid()
 
     entry_field = Entry(frame1)                                 #pole do wpisywania
     entry_field.grid()
 
-    entry_field.bind("<Return>", lambda event: save_and_clear())            #enter do zapisania słowa
+    entry_field.bind("<Return>", lambda event: enter_pressed())            #enter do zapisania słowa
     entry_field.bind("<F1>", lambda event: print(entered_words_array))      #f1 do wyświetlenie listy słów <dev_key>
 
     frame1.mainloop()
@@ -69,7 +88,7 @@ def view(frame, i, words, n):                                   # wyświetlanie 
             button = Button(frame1, text="Następne słowo >>", command=lambda: view(frame1, i, words[1:], n - 1))
             button.grid()
         else:
-            button = Button(frame1, text="Sprawdź ile pamiętasz!", command=lambda: check(frame1, i, words))
+            button = Button(frame1, text="Sprawdź ile pamiętasz!", command=lambda: enter_words(frame1, i, words))
             button.grid()
         frame1.mainloop()
     return
