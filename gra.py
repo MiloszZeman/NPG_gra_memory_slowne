@@ -1,6 +1,11 @@
-import random
+﻿import random
 import time
 from tkinter import *
+
+saguhaghgirw
+eafisbieg
+asdhugibsrb
+uaiegrs
 
 
 def word_count():
