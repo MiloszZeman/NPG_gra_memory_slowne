@@ -1,4 +1,4 @@
-﻿import random
+import random
 import time
 from tkinter import *
 
@@ -27,28 +27,42 @@ def word_count():
     return database, easy_word_count, medium_word_count, hard_word_count
 
 
-def check():
-    print("weszło")
-    return
-
-
-def enter_words(frame, i, words):
+def enter_words(frame, i, words, nr, t):
 
     frame.destroy()
 
     def enter_pressed():                                       # funkcja do czyszczenia i zapisywania pola wprowadzania
-            entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
-            entry_field.delete(0, END)                                  # wyczyść pole wspisywania
 
-            if len(entered_words_array) == 5:                           # jeśli wszystkie słowa zostały wpisane
-                entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
-                entry_field.grid_remove()                               # usuń pole do wpisywania
-                entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
-                button_check = Button(frame1, text="Sprawdź odpowiedzi!",
-                                      command=lambda: check())          #przycisk prowadzący do sprawdzania odpowiedzi
-                button_check.grid()
-            else:                                                       # jeśli nie wszystkie słowa zostały wpisane
-                entry_label.configure(text="Wprowadź słowo " +
+        def check():                                           # funkcja do zliczania punktów
+            frame1.forget()
+            point = 0
+            print(entered_words_array, int(i*len(Words)/3))
+            print(Words)
+            for k in range(len(entered_words_array)):
+                if entered_words_array[k] == Words[int(k+i*len(Words)/3)]:
+                    point += 1
+            score.append(point)
+            print("weszło", score)
+            if i < 2 and nr == 1:                               # kolejna tura
+                view(frame1, i+1, words, len(words)/(2-i))
+            elif i < 2 and nr == 2:
+                view_on_time(frame1, i+1, words, len(words)/(2-i),t)
+            else:
+                clear(frame1, 0)
+            return
+
+        entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
+        entry_field.delete(0, END)                                  # wyczyść pole wspisywania
+
+        if len(entered_words_array) == 5:                           # jeśli wszystkie słowa zostały wpisane
+            entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
+            entry_field.grid_remove()                               # usuń pole do wpisywania
+            entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
+            button_check = Button(frame1, text="Sprawdź odpowiedzi!",
+                                      command=lambda: check())       #przycisk prowadzący do sprawdzania odpowiedzi
+            button_check.grid()
+        else:                                                       # jeśli nie wszystkie słowa zostały wpisane
+            entry_label.configure(text="Wprowadź słowo " +
                                    str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem wpisywania
 
     frame1 = Frame(window)
@@ -66,13 +80,9 @@ def enter_words(frame, i, words):
     entry_field.bind("<Return>", lambda event: enter_pressed())            # "enter" do zapisania słowa
     entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
 
-    frame1.mainloop()
-    print("dobrze jest")
-    return                                                      # powrót do odpowiedniego view
 
 
 def view(frame, i, words, n):                                   # wyświetlanie słów w trybie "na ilość"
-    print(words[0*n])
     frame.destroy()
     if n > 0:
         frame1 = Frame(window)
@@ -81,42 +91,44 @@ def view(frame, i, words, n):                                   # wyświetlanie 
         label.grid()
         word = Label(frame1, text=words[0])
         word.grid()
-        print(words[0])
         if n > 1:
             button = Button(frame1, text="Następne słowo >>", command=lambda: view(frame1, i, words[1:], n - 1))
             button.grid()
         else:
-            button = Button(frame1, text="Sprawdź ile pamiętasz!", command=lambda: enter_words(frame1, i, words))
+            button = Button(frame1, text="Sprawdź ile pamiętasz!", command=lambda: enter_words(frame1, i, words[1:], 1, 0))
             button.grid()
+            return
         frame1.mainloop()
-    return
 
 
 def view_on_time(frame, i, words, n, t):                           # wyświetlanie słów w trybie "na czas"
     frame.destroy()
+    frame1 = Frame(window)
+    frame1.grid()
     if n > 0:
-        frame1 = Frame(window)
-        frame1.grid()
         label = Label(frame1, text="Tura " + str(i + 1), font=("Arial", 24,))
         label.grid()
         word = Label(frame1, text=words[0])
         word.grid()
         print(words[0])
-        frame1.mainloop()
+        window.update()
         time.sleep(t)
         view_on_time(frame1, i, words[1:], n - 1, t)
-        #frame1.after(t*1000, view_on_time(frame1, i, words[1:], n-1, t))
     else:
-        return
+        button =Button(frame1, text="Sprawdź ile pamiętasz", command=lambda: enter_words(frame1, i, words, 2, t))
+        button.grid()
+    frame1.mainloop()
 
 
 def draw(level, n):                                             # Losowanie n słów z odpowiedniego poziomu trudności
+    global Words
     if level == 1:
         words = random.sample(database[1:easy], n)
     elif level == 2:
         words = random.sample(database[easy+2:easy+medium+2], n)
     elif level == 3:
         words = random.sample(database[len(database)-hard:], n)
+    Words=words
     return words
 
 
@@ -151,6 +163,7 @@ def zabawa(frame, level, mode):                                 # działanie gry
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[0]:], on_time[0], T[0])
 
+
         elif level == 2:                                            #poziom średni
             # dźwięk
             words = draw(level, 3 * on_time[1])
@@ -162,7 +175,6 @@ def zabawa(frame, level, mode):                                 # działanie gry
             words = draw(level, 3 * on_time[2])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[2]:], on_time[2], T[2])
-    window.mainloop()
 
 
 def game():
@@ -186,7 +198,6 @@ def game():
     rad5.grid()
     button = Button(buttonFrame, text="Dalej", command=lambda: zabawa(buttonFrame, var1.get(), var2.get()))
     button.grid()
-    mainloop()
 
 
 def clear(frame, n):
@@ -209,7 +220,6 @@ def statistics():
     button = Button(buttonFrame, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
     label.grid()
     button.grid()
-    window.mainloop()
 
 
 def rules():
@@ -220,7 +230,6 @@ def rules():
     button = Button(buttonFrame, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
     label.grid()
     button.grid()
-    window.mainloop()
 
 
 def begin():
@@ -237,7 +246,6 @@ def begin():
     button3.grid(row=3, column=3, ipady=10, pady=10, padx=5)
     button4 = Button(buttonFrame, text="Wyjdź", font=("Arial", 24), fg="green", width=20, command=quit)
     button4.grid(row=4, column=3, ipady=10, pady=10, padx=5)
-    window.mainloop()
 
 
 
@@ -250,10 +258,13 @@ window.geometry("800x600")
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
 on_time = [5, 5, 7]
 T = [5, 3, 7]
+score = []
 
 database, easy, medium, hard = word_count()                     # Otwarcie pliku z bazą słów
 begin()
-
+window.mainloop()
 
 
 # tekst: http://uoo.univ.szczecin.pl/~jakubs/py/gfx.html
+# biblioteka tkinter: https://www.obliczeniowo.com.pl/496
+# yt: https://www.youtube.com/watch?v=YXPyB4XeYLA
