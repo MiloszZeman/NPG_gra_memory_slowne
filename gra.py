@@ -1,6 +1,10 @@
 import random
 import time
 from tkinter import *
+from pygame import mixer
+
+
+
 
 
 def word_count():
@@ -137,19 +141,22 @@ def zabawa(frame, level, mode):                                 # działanie gry
     if mode == 1:                                               # jeśli tryb na ilość fiszek:
 
         if level == 1:                                              # poziom łatwy
-            # dźwięk
+            mixer.music.load("muzyka_latwy.mp3")
+            mixer.music.play()
             words = draw(level, 3 * flashcards[0])
             for i in range(3):
                 view(frame, i, words[i*flashcards[0]:], flashcards[0])
 
-        elif level == 2:                                            # poziom średni
-            # dźwięk
+        elif level == 2:                                              # poziom średni
+            mixer.music.load("muzyka_sredni.mp3")
+            mixer.music.play()
             words = draw(level, 3 * flashcards[1])
             for i in range(3):
                 view(frame, i, words[i*flashcards[1]:], flashcards[1])
 
         elif level == 3:                                            # poziom trudny
-            # dźwięk
+            mixer.music.load("muzyka_trudny.mp3")
+            mixer.music.play()
             words = draw(level, 3 * flashcards[2])
             for i in range(3):
                 view(frame, i, words[i*flashcards[2]:], flashcards[2])
@@ -158,20 +165,23 @@ def zabawa(frame, level, mode):                                 # działanie gry
         print("<krótka instrukcja>")
 
         if level == 1:                                              #poziom łatwy
-            # dźwięk
+            mixer.music.load("muzyka_latwy.mp3")
+            mixer.music.play()
             words = draw(level, 3 * on_time[0])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[0]:], on_time[0], T[0])
 
 
         elif level == 2:                                            #poziom średni
-            # dźwięk
+            mixer.music.load("muzyka_sredni.mp3")
+            mixer.music.play()
             words = draw(level, 3 * on_time[1])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[1]:], on_time[1], T[1])
 
         elif level == 3:                                            #poziom trudny
-            # dźwięk
+            mixer.music.load("muzyka_trudny.mp3")
+            mixer.music.play()
             words = draw(level, 3 * on_time[2])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[2]:], on_time[2], T[2])
@@ -233,7 +243,8 @@ def rules():
 
 
 def begin():
-    # dźwięk
+    mixer.music.load("muzyka_startowa.mp3")
+    mixer.music.play()
     buttonFrame = Frame(window)
     buttonFrame.grid()
     label = Label(buttonFrame, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
@@ -251,6 +262,7 @@ def begin():
 
 ########################################################################################################################
 
+mixer.init()                                                    # uruchomienie modulu muzyki
 
 window = Tk()
 window.title("Gra w Memory")
