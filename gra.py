@@ -45,7 +45,7 @@ def enter_words(frame, i, words, nr, t):
             print(entered_words_array, int(i*len(Words)/3))     # linijka kontrolna
             print(Words)                                        # linijka kontrolna
             for word in range(len(entered_words_array)):           # zlicz punkty dla danej tury
-                if entered_words_array[word] == Words[int(k+i*len(Words)/3)]:
+                if entered_words_array[word] == Words[int(word+i*len(Words)/3)]:
                     point += 1
             score.append(point)                                 # dodaj punkty z danej tury do tablicy
             print("weszło", score)
@@ -212,7 +212,7 @@ def game():
     rad4.grid()
     rad5 = Radiobutton(buttonframe, text='Na czas', variable=var2, value=2)
     rad5.grid()
-    button = Button(buttonframe, text="Dalej", command=lambda: zabawa(buttonFrame, var1.get(), var2.get()))
+    button = Button(buttonframe, text="Dalej", command=lambda: zabawa(buttonframe, var1.get(), var2.get()))
     button.grid()
 
 
@@ -233,7 +233,7 @@ def statistics():
     buttonframe = Frame(window)
     buttonframe.grid()
     label = Label(buttonframe, text=f.read())
-    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
+    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonframe, 0))
     label.grid()
     button.grid()
 
@@ -243,7 +243,7 @@ def rules():
     buttonframe = Frame(window)
     buttonframe.grid()
     label = Label(buttonframe, text=f.read(), font=("Arial", 18, "italic"))
-    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
+    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonframe, 0))
     label.grid()
     button.grid()
 
@@ -254,11 +254,11 @@ def begin():
     label = Label(buttonframe, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
     
     label.grid(row=0, column=3, columnspan=2, ipady=10, pady=10, padx=5)
-    button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonFrame, 1))
+    button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonframe, 1))
     button1.grid(row=1, column=3, ipady=10, pady=10, padx=5)
-    button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), fg = "yellow", width=20, command=lambda: clear(buttonFrame, 2))
+    button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), fg = "yellow", width=20, command=lambda: clear(buttonframe, 2))
     button2.grid(row=2, column=3, ipady=10, pady=10, padx=5)
-    button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), fg = "red", width=20, command=lambda:  clear(buttonFrame, 3))
+    button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), fg = "red", width=20, command=lambda:  clear(buttonframe, 3))
     button3.grid(row=3, column=3, ipady=10, pady=10, padx=5)
     button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24), fg="green", width=20, command=quit)
     button4.grid(row=4, column=3, ipady=10, pady=10, padx=5)
