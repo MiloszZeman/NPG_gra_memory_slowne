@@ -8,6 +8,7 @@ from pygame import mixer
 
 
 def word_count():
+    global database
 
     f = open("baza slow.txt", "r", encoding="utf-8")            # otwarcie pliku tekstowego w trybie "r" - read
     database = f.read().split()                                 # utworzenie tablicy i zapisanie do niej każdego słowa
@@ -18,11 +19,11 @@ def word_count():
     medium_word_count = -1                                                 # -1 bo odrzucamy pole ze słowem "średnie"
     iterator = 0
 
-    while (database[iterator] != "Średnie:"):                          # przeliczenie słów z poziomu łatwego
+    while database[iterator] != "Średnie:":                          # przeliczenie słów z poziomu łatwego
         easy_word_count += 1
         iterator += 1
 
-    while (database[iterator] != "Trudne:"):                           # przeliczenie słów z poziomu średniego
+    while database[iterator] != "Trudne:":                           # przeliczenie słów z poziomu średniego
         medium_word_count += 1
         iterator += 1
 
@@ -39,19 +40,25 @@ def enter_words(frame, i, words, nr, t):
 
         def check():                                           # funkcja do zliczania punktów
             frame1.forget()
-            point = 0
-            print(entered_words_array, int(i*len(Words)/3))
-            print(Words)
-            for k in range(len(entered_words_array)):
-                if entered_words_array[k] == Words[int(k+i*len(Words)/3)]:
+            global score                                        # zaimportuj globalną tablicę score
+            point = 0                                           # zmienna do zliczania punktów
+            print(entered_words_array, int(i*len(Words)/3))     # linijka kontrolna
+            print(Words)                                        # linijka kontrolna
+            for word in range(len(entered_words_array)):           # zlicz punkty dla danej tury
+                if entered_words_array[word] == Words[int(k+i*len(Words)/3)]:
                     point += 1
-            score.append(point)
+            score.append(point)                                 # dodaj punkty z danej tury do tablicy
             print("weszło", score)
             if i < 2 and nr == 1:                               # kolejna tura
                 view(frame1, i+1, words, len(words)/(2-i))
             elif i < 2 and nr == 2:
-                view_on_time(frame1, i+1, words, len(words)/(2-i),t)
+                view_on_time(frame1, i+1, words, len(words)/(2-i), t)
             else:
+                file = open("statystyki.txt", "a", encoding="utf-8")    # zapisz punkty do pliku
+                file.write("\tWynik pierwszej tury: " + str(score[0]) + "\n\tWynik drugiej tury:" + str(score[1])
+                           + "\n\tWynik trzeciej tury:" + str(score[2]) + "\n\n")
+                file.close()
+                score = []
                 clear(frame1, 0)
             return
 
@@ -63,11 +70,11 @@ def enter_words(frame, i, words, nr, t):
             entry_field.grid_remove()                               # usuń pole do wpisywania
             entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
             button_check = Button(frame1, text="Sprawdź odpowiedzi!",
-                                      command=lambda: check())       #przycisk prowadzący do sprawdzania odpowiedzi
+                                  command=lambda: check())       #przycisk prowadzący do sprawdzania odpowiedzi
             button_check.grid()
         else:                                                       # jeśli nie wszystkie słowa zostały wpisane
             entry_label.configure(text="Wprowadź słowo " +
-                                   str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem wpisywania
+                                  str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem wpisywania
 
     frame1 = Frame(window)
     frame1.grid()
@@ -124,7 +131,7 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
     frame1.mainloop()
 
 
-def draw(level, n):                                             # Losowanie n słów z odpowiedniego poziomu trudności
+def draw(level, n):                         # Losowanie n słów z odpowiedniego poziomu trudności
     global Words
     if level == 1:
         words = random.sample(database[1:easy], n)
@@ -132,7 +139,7 @@ def draw(level, n):                                             # Losowanie n s�
         words = random.sample(database[easy+2:easy+medium+2], n)
     elif level == 3:
         words = random.sample(database[len(database)-hard:], n)
-    Words=words
+    Words = words
     return words
 
 
@@ -171,7 +178,6 @@ def zabawa(frame, level, mode):                                 # działanie gry
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[0]:], on_time[0], T[0])
 
-
         elif level == 2:                                            #poziom średni
             mixer.music.load("muzyka_sredni.mp3")
             mixer.music.play(-1)
@@ -190,23 +196,23 @@ def zabawa(frame, level, mode):                                 # działanie gry
 def game():
     global var1
     global var2
-    buttonFrame = Frame(window)
-    buttonFrame.grid()
-    label = Label(buttonFrame, text="Wybierz poziom trudności i tryb gry")
+    buttonframe = Frame(window)
+    buttonframe.grid()
+    label = Label(buttonframe, text="Wybierz poziom trudności i tryb gry")
     label.grid()
     var1 = IntVar()
     var2 = IntVar()
-    rad1 = Radiobutton(buttonFrame, text='Łatwy', variable=var1, value=1)
+    rad1 = Radiobutton(buttonframe, text='Łatwy', variable=var1, value=1)
     rad1.grid()
-    rad2 = Radiobutton(buttonFrame, text='Średni', variable=var1, value=2)
+    rad2 = Radiobutton(buttonframe, text='Średni', variable=var1, value=2)
     rad2.grid()
-    rad3 = Radiobutton(buttonFrame, text='Trudny', variable=var1, value=3)
+    rad3 = Radiobutton(buttonframe, text='Trudny', variable=var1, value=3)
     rad3.grid()
-    rad4 = Radiobutton(buttonFrame, text='Na ilość fiszek', variable=var2, value=1)
+    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek', variable=var2, value=1)
     rad4.grid()
-    rad5 = Radiobutton(buttonFrame, text='Na czas', variable=var2, value=2)
+    rad5 = Radiobutton(buttonframe, text='Na czas', variable=var2, value=2)
     rad5.grid()
-    button = Button(buttonFrame, text="Dalej", command=lambda: zabawa(buttonFrame, var1.get(), var2.get()))
+    button = Button(buttonframe, text="Dalej", command=lambda: zabawa(buttonFrame, var1.get(), var2.get()))
     button.grid()
 
 
@@ -224,20 +230,20 @@ def clear(frame, n):
 
 def statistics():
     f = open("statystyki.txt", "r", encoding="utf-8")
-    buttonFrame = Frame(window)
-    buttonFrame.grid()
-    label = Label(buttonFrame, text=f.read())
-    button = Button(buttonFrame, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
+    buttonframe = Frame(window)
+    buttonframe.grid()
+    label = Label(buttonframe, text=f.read())
+    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
     label.grid()
     button.grid()
 
 
 def rules():
     f = open("zasady gry.txt", "r", encoding="utf-8")
-    buttonFrame = Frame(window)
-    buttonFrame.grid()
-    label = Label(buttonFrame, text=f.read(), font=("Arial", 18, "italic"))
-    button = Button(buttonFrame, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
+    buttonframe = Frame(window)
+    buttonframe.grid()
+    label = Label(buttonframe, text=f.read(), font=("Arial", 18, "italic"))
+    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonFrame, 0))
     label.grid()
     button.grid()
 
@@ -246,14 +252,15 @@ def begin():
     buttonFrame = Frame(window)
     buttonFrame.grid()
     label = Label(buttonFrame, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
+    
     label.grid(row=0, column=3, columnspan=2, ipady=10, pady=10, padx=5)
-    button1 = Button(buttonFrame, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonFrame, 1))
+    button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonFrame, 1))
     button1.grid(row=1, column=3, ipady=10, pady=10, padx=5)
-    button2 = Button(buttonFrame, text="Statystyki", font=("Arial", 24), fg = "yellow", width=20, command=lambda: clear(buttonFrame, 2))
+    button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), fg = "yellow", width=20, command=lambda: clear(buttonFrame, 2))
     button2.grid(row=2, column=3, ipady=10, pady=10, padx=5)
-    button3 = Button(buttonFrame, text="Zasady gry", font=("Arial", 24), fg = "red", width=20, command=lambda:  clear(buttonFrame, 3))
+    button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), fg = "red", width=20, command=lambda:  clear(buttonFrame, 3))
     button3.grid(row=3, column=3, ipady=10, pady=10, padx=5)
-    button4 = Button(buttonFrame, text="Wyjdź", font=("Arial", 24), fg="green", width=20, command=quit)
+    button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24), fg="green", width=20, command=quit)
     button4.grid(row=4, column=3, ipady=10, pady=10, padx=5)
 
 
