@@ -137,7 +137,7 @@ def draw(level, n):                         # Losowanie n słów z odpowiedniego
         words = random.sample(database[easy+2:easy+medium+2], n)
     elif level == 3:
         words = random.sample(database[len(database)-hard:], n)
-    global Words = words
+    Words = words
     return words
 
 
@@ -274,6 +274,7 @@ window.geometry("800x600")
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
 on_time = [5, 5, 7]
 T = [5, 3, 7]
+
 #ZMIENNE GLOBALNE
 score = []
 Words = []
