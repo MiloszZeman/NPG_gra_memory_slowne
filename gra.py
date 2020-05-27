@@ -4,9 +4,6 @@ from tkinter import *
 from pygame import mixer
 
 
-
-
-
 def word_count():
     global database
 
@@ -133,13 +130,14 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
 
 def draw(level, n):                         # Losowanie n słów z odpowiedniego poziomu trudności
     global Words
+    words = []
     if level == 1:
         words = random.sample(database[1:easy], n)
     elif level == 2:
         words = random.sample(database[easy+2:easy+medium+2], n)
     elif level == 3:
         words = random.sample(database[len(database)-hard:], n)
-    Words = words
+    global Words = words
     return words
 
 
@@ -276,7 +274,11 @@ window.geometry("800x600")
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
 on_time = [5, 5, 7]
 T = [5, 3, 7]
+#ZMIENNE GLOBALNE
 score = []
+Words = []
+var1 = 0
+var2 = 0
 
 database, easy, medium, hard = word_count()                     # Otwarcie pliku z bazą słów
 begin()
