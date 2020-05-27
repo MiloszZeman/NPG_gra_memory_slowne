@@ -249,9 +249,9 @@ def rules():
 
 
 def begin():
-    buttonFrame = Frame(window)
-    buttonFrame.grid()
-    label = Label(buttonFrame, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
+    buttonframe = Frame(window)
+    buttonframe.grid()
+    label = Label(buttonframe, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
     
     label.grid(row=0, column=3, columnspan=2, ipady=10, pady=10, padx=5)
     button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonFrame, 1))
