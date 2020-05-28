@@ -64,9 +64,11 @@ def submit_user_name_and_points(frame):
 
     # łańcuch znaków odpowiednio zformatowny w celu wyświetlania punktacjii
     score_display_string = "\tWynik tury nr 1: " + str(score[0])\
-    + " pkt\n\tWynik tury nr 2: " + str(score[1])\
+        + " pkt\n\tWynik tury nr 2: " + str(score[1])\
         + " pkt\n\tWynik tury nr 3: " + str(score[2])\
         + " pkt\n\n"
+
+    score = []
 
     score_label = Label(frame1, text=score_display_string, font=("Arial", 24), justify=LEFT)  # wyświetlenie punktacji
 
@@ -143,17 +145,18 @@ def enter_words(frame, tura, words, nr, t):
     entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
 
 
-def view(frame, i, words, n):                                   # wyświetlanie słów w trybie "na ilość"
+def view(frame, i, words, number_of_words):                                   # wyświetlanie słów w trybie "na ilość"
     frame.destroy()
-    if n > 0:
+    if number_of_words > 0:
         frame1 = Frame(window)
         frame1.grid()
         label = Label(frame1, text="Tura " + str(i + 1), font=("Arial", 24,))
         label.grid()
         word = Label(frame1, text=words[0])
         word.grid()
-        if n > 1:
-            button = Button(frame1, text="Następne słowo >>", command=lambda: view(frame1, i, words[1:], n - 1))
+        if number_of_words > 1:
+            button = Button(frame1, text="Następne słowo >>",
+                            command=lambda: view(frame1, i, words[1:], number_of_words - 1))
             button.grid()
         else:
             button = Button(frame1, text="Sprawdź ile pamiętasz!",
@@ -182,65 +185,65 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
     frame1.mainloop()
 
 
-def draw(level, n):                         # Losowanie n słów z odpowiedniego poziomu trudności
+def draw(difficulty_level, number_of_words):                         # Losowanie n słów z odpowiedniego poziomu trudności
     global Words
     words = []
-    if level == 1:
-        words = random.sample(database[1:easy], n)
-    elif level == 2:
-        words = random.sample(database[easy+2:easy+medium+2], n)
-    elif level == 3:
-        words = random.sample(database[len(database)-hard:], n)
+    if difficulty_level == 1:                                                   # poziom łatwy
+        words = random.sample(database[1:easy], number_of_words)
+    elif difficulty_level == 2:                                                 # poziom średni
+        words = random.sample(database[easy+2:easy+medium+2], number_of_words)
+    elif difficulty_level == 3:                                                 # poziom trudny
+        words = random.sample(database[len(database)-hard:], number_of_words)
     Words = words
     return words
 
 
-def zabawa(frame, level, mode):                                 # działanie gry
+def zabawa(frame, difficulty_level, mode):                                 # działanie gry
     frame.forget()
     if mode == 1:                                               # jeśli tryb na ilość fiszek:
 
-        if level == 1:                                              # poziom łatwy
+        if difficulty_level == 1:                                              # poziom łatwy
             mixer.music.load("muzyka_latwy.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * flashcards[0])
+            words = draw(difficulty_level, 3 * flashcards[0])
             for i in range(3):
                 view(frame, i, words[i*flashcards[0]:], flashcards[0])
 
-        elif level == 2:                                            # poziom średni
+        elif difficulty_level == 2:                                            # poziom średni
             mixer.music.load("muzyka_sredni.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * flashcards[1])
+            words = draw(difficulty_level, 3 * flashcards[1])
             for i in range(3):
                 view(frame, i, words[i*flashcards[1]:], flashcards[1])
 
-        elif level == 3:                                            # poziom trudny
+        elif difficulty_level == 3:                                            # poziom trudny
             mixer.music.load("muzyka_trudny.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * flashcards[2])
+            words = draw(difficulty_level, 3 * flashcards[2])
             for i in range(3):
                 view(frame, i, words[i*flashcards[2]:], flashcards[2])
 
     elif mode == 2:                                             # jeśli tryb na czas:
         print("<krótka instrukcja>")
 
-        if level == 1:                                              # poziom łatwy
+        if difficulty_level == 1:                                              # poziom łatwy
             mixer.music.load("muzyka_latwy.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * on_time[0])
+            words = draw(difficulty_level, 3 * on_time[0])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[0]:], on_time[0], T[0])
 
-        elif level == 2:                                            # poziom średni
+        elif difficulty_level == 2:                                            # poziom średni
             mixer.music.load("muzyka_sredni.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * on_time[1])
+            words = draw(difficulty_level, 3 * on_time[1])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[1]:], on_time[1], T[1])
 
-        elif level == 3:                                            # poziom trudny
+        elif difficulty_level == 3:                                            # poziom trudny
             mixer.music.load("muzyka_trudny.mp3")
             mixer.music.play(-1)
-            words = draw(level, 3 * on_time[2])
+            words = draw(difficulty_level, 3 * on_time[2])
             for i in range(3):
                 view_on_time(frame, i, words[i*on_time[2]:], on_time[2], T[2])
 
