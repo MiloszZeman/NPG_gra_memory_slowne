@@ -90,7 +90,7 @@ def submit_user_name_and_points(frame):
     frame1.mainloop()
 
 
-def enter_words(frame, tura, words, nr, t):
+def enter_words(frame, tura, words, mode, t):
 
     frame.destroy()
 
@@ -106,10 +106,10 @@ def enter_words(frame, tura, words, nr, t):
                 if entered_words_array[word] == Words[int(word+tura*len(Words)/3)]:
                     point += 1
             score.append(point)                                 # dodaj punkty z danej tury do tablicy
-            print("weszło", score)
-            if tura < 2 and nr == 1:                            # kolejna tura
-                view(frame1, tura+1, words, len(words)/(2-tura))
-            elif tura < 2 and nr == 2:
+            print("weszło", score)                              # linijka kontrolna
+            if tura < 2 and mode == 1:                          # kolejna tura na ilość
+                view(frame1, words, len(words)/(2-tura), tura + 1)
+            elif tura < 2 and mode == 2:                        # kolejna tura na czas
                 view_on_time(frame1, tura+1, words, len(words)/(2-tura), t)
             else:
                 submit_user_name_and_points(frame1)
@@ -145,22 +145,22 @@ def enter_words(frame, tura, words, nr, t):
     entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
 
 
-def view(frame, i, words, number_of_words):                                   # wyświetlanie słów w trybie "na ilość"
+def view(frame, words, number_of_words, tura=0):                                # wyświetlanie słów w trybie "na ilość"
     frame.destroy()
     if number_of_words > 0:
         frame1 = Frame(window)
         frame1.grid()
-        label = Label(frame1, text="Tura " + str(i + 1), font=("Arial", 24,))
+        label = Label(frame1, text="Tura " + str(tura + 1), font=("Arial", 24,))
         label.grid()
         word = Label(frame1, text=words[0])
         word.grid()
         if number_of_words > 1:
             button = Button(frame1, text="Następne słowo >>",
-                            command=lambda: view(frame1, i, words[1:], number_of_words - 1))
+                            command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
             button.grid()
         else:
             button = Button(frame1, text="Sprawdź ile pamiętasz!",
-                            command=lambda: enter_words(frame1, i, words[1:], 1, 0))
+                            command=lambda: enter_words(frame1, tura, words[1:], 1, 0))
             button.grid()
             return
         frame1.mainloop()
@@ -185,7 +185,7 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
     frame1.mainloop()
 
 
-def draw(difficulty_level, number_of_words):                         # Losowanie n słów z odpowiedniego poziomu trudności
+def draw(difficulty_level, number_of_words):                       # Losowanie n słów z odpowiedniego poziomu trudności
     global Words
     words = []
     if difficulty_level == 1:                                                   # poziom łatwy
@@ -206,22 +206,19 @@ def zabawa(frame, difficulty_level, mode):                                 # dzi
             mixer.music.load("muzyka_latwy.mp3")
             mixer.music.play(-1)
             words = draw(difficulty_level, 3 * flashcards[0])
-            for i in range(3):
-                view(frame, i, words[i*flashcards[0]:], flashcards[0])
+            view(frame, words[0*flashcards[0]:], flashcards[0])
 
         elif difficulty_level == 2:                                            # poziom średni
             mixer.music.load("muzyka_sredni.mp3")
             mixer.music.play(-1)
             words = draw(difficulty_level, 3 * flashcards[1])
-            for i in range(3):
-                view(frame, i, words[i*flashcards[1]:], flashcards[1])
+            view(frame, words[0*flashcards[1]:], flashcards[1])
 
         elif difficulty_level == 3:                                            # poziom trudny
             mixer.music.load("muzyka_trudny.mp3")
             mixer.music.play(-1)
             words = draw(difficulty_level, 3 * flashcards[2])
-            for i in range(3):
-                view(frame, i, words[i*flashcards[2]:], flashcards[2])
+            view(frame, words[0*flashcards[2]:], flashcards[2])
 
     elif mode == 2:                                             # jeśli tryb na czas:
         print("<krótka instrukcja>")
