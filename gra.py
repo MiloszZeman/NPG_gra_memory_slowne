@@ -95,6 +95,7 @@ def enter_words(frame, tura, words, mode, t):
     frame.destroy()
 
     def enter_pressed():                                        # funkcja do czyszczenia i zapisywania pola wprowadzania
+        global var1
 
         def check():                                            # funkcja do zliczania punktów
             frame1.forget()
@@ -115,19 +116,38 @@ def enter_words(frame, tura, words, mode, t):
                 submit_user_name_and_points(frame1)
             return
 
-        entered_words_array.append(entry_field.get())               # dodaj słowo do tablicy wpisanych słów
-        entry_field.delete(0, END)                                  # wyczyść pole wspisywania
+        def next_word(number_of_words: int):
+            if len(entered_words_array) == number_of_words:                     # jeśli wszystkie słowa zostały wpisane
+                entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
+                entry_field.grid_remove()                               # usuń pole do wpisywania
+                entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
+                if tura == 2:
+                    button_check = Button(frame1, text="Sprawdź swoje wyniki!",
+                                          command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
+                else:
+                    button_check = Button(frame1, text="Przejdź do następnej tury",
+                                          command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
+                button_check.grid()
+            else:                                                       # jeśli nie wszystkie słowa zostały wpisane
+                entry_label.configure(text="Wprowadź słowo " +
+                                      str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem
 
-        if len(entered_words_array) == 5:                           # jeśli wszystkie słowa zostały wpisane
-            entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
-            entry_field.grid_remove()                               # usuń pole do wpisywania
-            entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
-            button_check = Button(frame1, text="Przejdź do następnej tury",
-                                  command=lambda: check())          # przycisk prowadzący do sprawdzania odpowiedzi
-            button_check.grid()
-        else:                                                       # jeśli nie wszystkie słowa zostały wpisane
-            entry_label.configure(text="Wprowadź słowo " +
-                                  str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem wpisywania
+        entered_words_array.append(entry_field.get())  # dodaj słowo do tablicy wpisanych słów
+        entry_field.delete(0, END)  # wyczyść pole wspisywania
+
+        # Dobranie ilości słów, które trzeba wpisać adekwatnie do trybu
+        if var1.get() == 1 and mode == 1:
+            next_word(flashcards[0])
+        elif var1.get() == 2 and mode == 1:
+            next_word(flashcards[1])
+        elif var1.get() == 3 and mode == 1:
+            next_word(flashcards[2])
+        elif var1.get() == 1 and mode == 2:
+            next_word(on_time[0])
+        elif var1.get() == 2 and mode == 2:
+            next_word(on_time[1])
+        elif var1.get() == 3 and mode == 2:
+            next_word(on_time[2])
 
     frame1 = Frame(window)
     frame1.grid()
