@@ -120,7 +120,7 @@ def enter_words(frame, tura, words, nr, t):
             entry_label.configure(text="Wpisałeś wszyskie słowa!")  # zakutalizuj text przed polem wpisywania
             entry_field.grid_remove()                               # usuń pole do wpisywania
             entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
-            button_check = Button(frame1, text="Sprawdź odpowiedzi!",
+            button_check = Button(frame1, text="Przejdź do następnej tury",
                                   command=lambda: check())          # przycisk prowadzący do sprawdzania odpowiedzi
             button_check.grid()
         else:                                                       # jeśli nie wszystkie słowa zostały wpisane
