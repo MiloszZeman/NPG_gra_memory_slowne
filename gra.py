@@ -195,24 +195,34 @@ def game():
     global var1
     global var2
     buttonframe = Frame(window)
-    buttonframe.grid()
-    label = Label(buttonframe, text="Wybierz poziom trudności i tryb gry")
-    label.grid()
+    buttonframe.configure(bg="olive")
+    # buttonframe.grid()
+             # grid działa zamiennie z pack ALE aktualnie można wcisnąć "dalej" bez zaznaczania żadnej opcji
+    buttonframe.pack(side=TOP, pady=70, ipady=10)
+
     var1 = IntVar()
     var2 = IntVar()
-    rad1 = Radiobutton(buttonframe, text='Łatwy', variable=var1, value=1)
-    rad1.grid()
-    rad2 = Radiobutton(buttonframe, text='Średni', variable=var1, value=2)
-    rad2.grid()
-    rad3 = Radiobutton(buttonframe, text='Trudny', variable=var1, value=3)
-    rad3.grid()
-    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek', variable=var2, value=1)
-    rad4.grid()
-    rad5 = Radiobutton(buttonframe, text='Na czas', variable=var2, value=2)
-    rad5.grid()
-    button = Button(buttonframe, text="Dalej", command=lambda: zabawa(buttonframe, var1.get(), var2.get()))
-    button.grid()
 
+    label1 = Label(buttonframe, text="\nWybierz poziom trudności z jakim chesz grać:\n",bg="dark olive green", font=("Arial", 18), width=40)
+    label1.grid(pady=10)
+    rad1 = Radiobutton(buttonframe, text='Łatwy',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=1)
+    rad1.grid()
+    rad2 = Radiobutton(buttonframe, text='Średni',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=2)
+    rad2.grid()
+    rad3 = Radiobutton(buttonframe, text='Trudny',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=3)
+    rad3.grid()
+    empty = Label(buttonframe, text = "", bg="olive",)
+    empty.grid()
+
+    label2 = Label(buttonframe, text="\n...oraz tryb gry:\n",font=("Arial", 18),bg="dark olive green", width=40)
+    label2.grid(pady=10)
+    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=1)
+    rad4.grid()
+    rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=2)
+    rad5.grid()
+
+    button = Button(buttonframe, text="DALEJ",fg="#DEB887", bg="dark olive green",font=("Arial", 12), cursor="plus", command=lambda: zabawa(buttonframe, var1.get(), var2.get()))
+    button.grid(sticky=E, ipady=5, ipadx=10)
 
 def clear(frame, n):
     frame.destroy()
@@ -239,27 +249,37 @@ def statistics():
 def rules():
     f = open("zasady gry.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
-    buttonframe.grid()
-    label = Label(buttonframe, text=f.read(), font=("Arial", 18, "italic"))
-    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonframe, 0))
-    label.grid()
-    button.grid()
+    buttonframe.pack(side=TOP)
+    buttonframe.configure(bg="olive")
+    label = Label(buttonframe, text=f.read(), justify=LEFT, wraplength=700, font=("Arial", 18, "italic"), bg="olive")
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus", bg="dark olive green", command=lambda: clear(buttonframe, 0))
+    label.grid(pady=10)
+    button.grid(ipady=2, padx=5, sticky=E)
 
 
 def begin():
     buttonframe = Frame(window)
-    buttonframe.grid()
-    label = Label(buttonframe, text="Witaj w grze memory!!!\n", font=("Arial", 24,))
-    
-    label.grid(row=0, column=3, columnspan=2, ipady=10, pady=10, padx=5)
-    button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), fg = "green", width=20, command=lambda: clear(buttonframe, 1))
-    button1.grid(row=1, column=3, ipady=10, pady=10, padx=5)
-    button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), fg = "yellow", width=20, command=lambda: clear(buttonframe, 2))
-    button2.grid(row=2, column=3, ipady=10, pady=10, padx=5)
-    button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), fg = "red", width=20, command=lambda:  clear(buttonframe, 3))
-    button3.grid(row=3, column=3, ipady=10, pady=10, padx=5)
-    button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24), fg="green", width=20, command=quit)
-    button4.grid(row=4, column=3, ipady=10, pady=10, padx=5)
+    buttonframe.pack (side = TOP)
+    buttonframe.configure(background="olive")
+
+    label = Label(buttonframe, text="\nWitaj w grze MEMORY\n",font=("Arial", 30,), bg="olive")
+    label.grid(row=0, ipady=5, pady=0, padx=5)
+
+    button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), bg="dark olive green",
+                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 1))
+    button1.grid(row=1, ipady=10, pady=10, padx=5)
+
+    button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), bg="dark olive green",
+                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 2))
+    button2.grid(row=2, ipady=10, pady=10, padx=5)
+
+    button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), bg="dark olive green",
+                     fg = "#DEB887", width=20, cursor="plus", command=lambda:  clear(buttonframe, 3))
+    button3.grid(row=3, ipady=10, pady=10, padx=5)
+
+    button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24),bg = "dark olive green",
+                     fg="#DEB887", width=20, cursor="plus", command=quit)
+    button4.grid(row=4, ipady=10, pady=10, padx=5)
 
 
 
@@ -268,9 +288,18 @@ def begin():
 mixer.init()                                                    # uruchomienie modulu muzyki
 mixer.music.load("muzyka_startowa.mp3")
 mixer.music.play(-1)
+
 window = Tk()
 window.title("Gra w Memory")
 window.geometry("800x600")
+window.configure(background="olive")
+
+
+# photo = PhotoImage(file="tablica.png")                        # dodaje obrazek, ale nie działa jako tło
+# photobest = Label(window, image=photo, bd=0)
+# photobest.pack()
+
+
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
 on_time = [5, 5, 7]
 T = [5, 3, 7]
