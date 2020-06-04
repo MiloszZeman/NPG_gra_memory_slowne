@@ -1,4 +1,1 @@
-﻿	Wynik pierwszej tury: 0
-	Wynik drugiej tury:0
-	Wynik trzeciej tury:0
-
+﻿
