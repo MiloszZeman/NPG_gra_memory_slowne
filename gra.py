@@ -170,19 +170,20 @@ def view(frame, words, number_of_words, tura=0):                                
     frame.destroy()
     if number_of_words > 0:
         frame1 = Frame(window)
-        frame1.grid()
-        label = Label(frame1, text="Tura " + str(tura + 1), font=("Arial", 24,))
-        label.grid()
-        word = Label(frame1, text=words[0])
-        word.grid()
+        frame1.configure(background="olive")
+        frame1.pack(side=TOP, pady=80)
+        label_tura = Label(frame1, text="To jest runda nr " + str(tura + 1), font=("Arial", 24,), bg="dark olive green", width=25)
+        label_tura.grid( ipady=20, ipadx=50)
+        word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
+        word.grid(ipady=30)
         if number_of_words > 1:
-            button = Button(frame1, text="Następne słowo >>",
+            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",
                             command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
-            button.grid()
+            button.grid(stick=E, ipady=8, ipadx=4, pady=10)
         else:
-            button = Button(frame1, text="Sprawdź ile pamiętasz!",
+            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",
                             command=lambda: enter_words(frame1, tura, words[1:], 1, 0))
-            button.grid()
+            button.grid(stick=E, ipady=8, ipadx=4, pady=10)
             return
         frame1.mainloop()
 
@@ -369,9 +370,6 @@ def begin():
                      fg="#DEB887", width=20, cursor="plus", command=quit)
     button4.grid(row=4, ipady=10, pady=10, padx=5)
 
-    # button5 = Button(buttonframe, text="Resetuj statystyki", font=("Arial", 24), fg="red", width=20,
-    #                  command=lambda: reset_statistics())
-    # button5.grid(row=5, ipady=10, pady=10, padx=5)
 
 
 ########################################################################################################################
