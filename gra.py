@@ -60,34 +60,37 @@ def submit_user_name_and_points(frame):
     frame.destroy()
 
     frame1 = Frame(window)                                                     # utwórz ramkę
+    frame1.configure(background="olive")
+    frame1.pack(side=TOP, pady=80)
 
-    your_score_label = Label(frame1, text="Twój wynik:", font=("Arial", 24))   # napis "Twój wynik"
+    your_score_label = Label(frame1, text="Brawo! Twój wynik to:", font=("Arial", 24), bg="dark olive green", width=25)   # napis "Twój wynik"
 
     # łańcuch znaków odpowiednio zformatowny w celu wyświetlania punktacjii
-    score_display_string = "\tWynik tury nr 1: " + str(score[0])\
-        + " pkt\n\tWynik tury nr 2: " + str(score[1])\
-        + " pkt\n\tWynik tury nr 3: " + str(score[2])\
+    score_display_string = "\nWynik tury nr 1: " + str(score[0])\
+        + " pkt\nWynik tury nr 2: " + str(score[1])\
+        + " pkt\nWynik tury nr 3: " + str(score[2])\
         + " pkt\n\n"
 
     score = []
 
-    score_label = Label(frame1, text=score_display_string, font=("Arial", 24), justify=LEFT)  # wyświetlenie punktacji
+    score_label = Label(frame1, text=score_display_string, font=("Arial", 16), bg="olive")  # wyświetlenie punktacji
 
-    enter_name_label = Label(frame1, text="Wprowadź swoje imię:", font=("Arial", 24))         # teskt "Wprowadź imię"
+    enter_name_label = Label(frame1, text="Wprowadź swoje imię:", font=("Arial", 24), bg="dark olive green", width=25)         # teskt "Wprowadź imię"
 
-    enter_name_field = Entry(frame1)                                                          # pole do wpisania nazwy
+    enter_name_field = Entry(frame1, width=15, font=("Arial", 18,))                                                          # pole do wpisania nazwy
 
     # przycisk do zapisania punkacjii i powroti do menu głównego
-    submit_button = Button(frame1, text="Zapisz i wróć do menu",
-                           command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
+    submit_button = Button(frame1, text=" ZAPISZ I POWRÓĆ DO MENU ", fg="#DEB887", font=("Arial", 12), bg="dark olive green",
+                    cursor="plus", command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
 
     # Kolejność rysowania poszczególnych widgetów
-    frame1.grid()
-    your_score_label.grid()
+
+    your_score_label.grid(ipady=20, ipadx=50)
     score_label.grid()
-    enter_name_label.grid()
-    enter_name_field.grid()
-    submit_button.grid()
+    enter_name_label.grid(ipady=20, ipadx=50)
+    enter_name_field.grid(pady=25)
+    submit_button.grid(ipady=2, padx=5, stick=E)
+
     frame1.mainloop()
 
 
