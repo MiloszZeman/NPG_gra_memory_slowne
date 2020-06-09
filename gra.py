@@ -89,7 +89,7 @@ def submit_user_name_and_points(frame):
     score_label.grid()
     enter_name_label.grid(ipady=20, ipadx=50)
     enter_name_field.grid(pady=25)
-    submit_button.grid(ipady=2, padx=5, stick=E)
+    submit_button.grid(ipady=3, padx=6, stick=E)
 
     frame1.mainloop()
 
@@ -324,24 +324,26 @@ def clear(frame, number_of_button_pressed):                             # rozdzi
 def statistics():
     f = open("statystyki.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
-    buttonframe.pack(side=TOP, pady=50)
     buttonframe.configure(bg="olive")
 
-    label_statistic = Label(buttonframe, text="STATYSTYKI:", font=("Arial", 30), bg="olive", width=20,)
-    label_statistic.grid(ipady=10)
+    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,), bg="dark olive green", width=25,)
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
                           fg="#DEB887", width=15, cursor="plus", command=lambda: reset_statistics())
-    button_reset.grid(padx=5, sticky=E, column=1)
 
-    label_wyniki = Label(buttonframe, text=f.read(), bg="dark olive green")
+    label_wyniki = Label(buttonframe, text=f.read(), bg="olive", font=("Arial", 13))
     f.close()
-    label_wyniki.grid(ipadx=70, ipady=15, column=0)
 
     button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
                     cursor="plus", command=lambda: clear(buttonframe, 0))
-    button.grid(column=1, ipady=7)
 
+#kolejność wyświetlania widgetów
+    buttonframe.pack(side=TOP, pady=45)
+
+    label_statistic.grid(ipady=20, ipadx=50, columnspan=2, row=0)
+    button_reset.grid(pady=25, sticky=E,column=1, row=1)
+    button.grid(ipady=7, sticky=E, column=1, row=2)
+    label_wyniki.grid(ipadx=70, ipady=15, column=0,row=1, rowspan=30)
 
 
 def rules():
