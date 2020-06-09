@@ -271,8 +271,6 @@ def game():
     global var2
     buttonframe = Frame(window)
     buttonframe.configure(bg="olive")
-    # buttonframe.grid()
-             # grid działa zamiennie z pack ALE aktualnie można wcisnąć "dalej" bez zaznaczania żadnej opcji
     buttonframe.pack(side=TOP, pady=70, ipady=10)
 
     var1 = IntVar()
@@ -316,16 +314,27 @@ def clear(frame, number_of_button_pressed):                             # rozdzi
 def statistics():
     f = open("statystyki.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
-    buttonframe.grid()
-    label = Label(buttonframe, text=f.read())
+    buttonframe.pack(side=TOP, pady=50)
+    buttonframe.configure(bg="olive")
+
+    label_statistic = Label(buttonframe, text="STATYSTYKI:", font=("Arial", 30), bg="olive", width=20,)
+    label_statistic.grid(ipady=10)
+
+    button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
+                          fg="#DEB887", width=15, command=lambda: reset_statistics())
+    button_reset.grid(padx=5, sticky=E, column=1)
+
+    label_wyniki = Label(buttonframe, text=f.read(), bg="dark olive green")
     f.close()
-    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonframe, 0))
-    label.grid()
-    button.grid()
+    label_wyniki.grid(ipadx=70, ipady=15, column=0)
+
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15, command=lambda: clear(buttonframe, 0))
+    button.grid(column=1, ipady=7)
+
 
 
 def rules():
-    f = open("zasady gry.txt", "r", encoding="utf-8")
+    f = open("zasady_gry.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
     buttonframe.pack(side=TOP)
     buttonframe.configure(bg="olive")
@@ -360,9 +369,9 @@ def begin():
                      fg="#DEB887", width=20, cursor="plus", command=quit)
     button4.grid(row=4, ipady=10, pady=10, padx=5)
 
-    button5 = Button(buttonframe, text="Resetuj statystyki", font=("Arial", 24), fg="red", width=20,
-                     command=lambda: reset_statistics())
-    button5.grid(row=5, ipady=10, pady=10, padx=5)
+    # button5 = Button(buttonframe, text="Resetuj statystyki", font=("Arial", 24), fg="red", width=20,
+    #                  command=lambda: reset_statistics())
+    # button5.grid(row=5, ipady=10, pady=10, padx=5)
 
 
 ########################################################################################################################
@@ -377,10 +386,6 @@ window.title("Gra w Memory")
 window.geometry("800x600")
 window.configure(background="olive")
 
-
-# photo = PhotoImage(file="tablica.png")                        # dodaje obrazek, ale nie działa jako tło
-# photobest = Label(window, image=photo, bd=0)
-# photobest.pack()
 
 
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
