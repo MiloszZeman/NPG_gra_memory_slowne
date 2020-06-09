@@ -50,7 +50,8 @@ def save_score_to_file(frame, user_name: str, score_string: str):
     file = open("statystyki.txt", "w", encoding="utf-8")                   # otwarcie pliku w trybie w
     file.write(user_name + " " + time_string + "\n" + score_string + "\n" + content)    # zapisanie punktacji
     file.close()                                                           # zamknięcie pliku
-
+    mixer.music.load("muzyka_startowa.mp3")
+    mixer.music.play(-1)
     clear(frame, 0)
 
 
@@ -295,7 +296,9 @@ def game():
     rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=2)
     rad5.grid()
 
-    button = Button(buttonframe, text="DALEJ",fg="#DEB887", bg="dark olive green",font=("Arial", 12), cursor="plus", command=lambda: zabawa(buttonframe, var1.get(), var2.get()))
+    button = Button(buttonframe, text="DALEJ", fg="#DEB887", bg="dark olive green", font=("Arial", 12), cursor="plus",
+                    command=lambda: zabawa(buttonframe, var1.get(), var2.get()) if var1.get() != 0 and var2.get() != 0
+                    else print("nie wybrano poziomu lub trybu"))
     button.grid(sticky=E, ipady=5, ipadx=10)
 
 def clear(frame, number_of_button_pressed):                             # rozdzielacz
@@ -359,7 +362,7 @@ def begin():
 
     button5 = Button(buttonframe, text="Resetuj statystyki", font=("Arial", 24), fg="red", width=20,
                      command=lambda: reset_statistics())
-    button5.grid(row=5, column=3, ipady=10, pady=10, padx=5)
+    button5.grid(row=5, ipady=10, pady=10, padx=5)
 
 
 ########################################################################################################################
