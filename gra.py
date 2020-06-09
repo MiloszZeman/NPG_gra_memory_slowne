@@ -123,12 +123,12 @@ def enter_words(frame, tura, words, mode, t):
                 entry_field.grid_remove()                               # usuń pole do wpisywania
                 entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
                 if tura == 2:
-                    button_check = Button(frame1, text="Sprawdź swoje wyniki!",
+                    button_check = Button(frame1, text=" SPRAWDŹ SWOJE WYNIKI ", bg="dark olive green", fg="#DEB887",cursor="plus",
                                           command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
                 else:
-                    button_check = Button(frame1, text="Przejdź do następnej tury",
+                    button_check = Button(frame1, text=" PRZEJDŹ DO KOLEJNEJ RUNDY ", bg="dark olive green", fg="#DEB887",cursor="plus",
                                           command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
-                button_check.grid()
+                button_check.grid( ipady=8, ipadx=4, pady=10)
             else:                                                       # jeśli nie wszystkie słowa zostały wpisane
                 entry_label.configure(text="Wprowadź słowo " +
                                       str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem
@@ -151,16 +151,20 @@ def enter_words(frame, tura, words, mode, t):
             next_word(on_time[2])
 
     frame1 = Frame(window)
-    frame1.grid()
+    frame1.pack(side=TOP, pady=80)
+    frame1.configure(bg="olive")
 
     entered_words_array = []                                    # utworzenie tablicy słów wpisanych przez gracza
 
     entry_label = Label(frame1, text="Wprowadź słowo " + str(1+len(entered_words_array)) + ":",
-                        font=("Arial", 24,))                    # tekst "wprowadź słowo"
-    entry_label.grid()
+                        font=("Arial", 24,), width=25, bg="dark olive green")                    # tekst "wprowadź słowo"
+    entry_label.grid(ipady=20, ipadx=50)
 
-    entry_field = Entry(frame1)                                 # pole do wpisywania
-    entry_field.grid()
+    empty_label = Label(frame1, text="\n\n", bg="olive")                    # pusty label dla zachowania odstępów
+    empty_label.grid()
+
+    entry_field = Entry(frame1, width=15, font=("Arial", 18,))                                 # pole do wpisywania
+    entry_field.grid(pady=20)
 
     entry_field.bind("<Return>", lambda event: enter_pressed())            # "enter" do zapisania słowa
     entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
@@ -177,7 +181,7 @@ def view(frame, words, number_of_words, tura=0):                                
         word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
         word.grid(ipady=30)
         if number_of_words > 1:
-            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",
+            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",cursor="plus",
                             command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
             button.grid(stick=E, ipady=8, ipadx=4, pady=10)
         else:
@@ -322,14 +326,15 @@ def statistics():
     label_statistic.grid(ipady=10)
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
-                          fg="#DEB887", width=15, command=lambda: reset_statistics())
+                          fg="#DEB887", width=15, cursor="plus", command=lambda: reset_statistics())
     button_reset.grid(padx=5, sticky=E, column=1)
 
     label_wyniki = Label(buttonframe, text=f.read(), bg="dark olive green")
     f.close()
     label_wyniki.grid(ipadx=70, ipady=15, column=0)
 
-    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15, command=lambda: clear(buttonframe, 0))
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
+                    cursor="plus", command=lambda: clear(buttonframe, 0))
     button.grid(column=1, ipady=7)
 
 
