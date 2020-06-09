@@ -81,7 +81,7 @@ def submit_user_name_and_points(frame):
 
     # przycisk do zapisania punkacjii i powroti do menu głównego
     submit_button = Button(frame1, text=" ZAPISZ I POWRÓĆ DO MENU ", fg="#DEB887", font=("Arial", 12), bg="dark olive green",
-                    cursor="plus", command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
+                    cursor="plus", activebackground="dark olive green", command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
 
     # Kolejność rysowania poszczególnych widgetów
 
@@ -127,10 +127,10 @@ def enter_words(frame, tura, words, mode, t):
                 entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
                 if tura == 2:
                     button_check = Button(frame1, text=" SPRAWDŹ SWOJE WYNIKI ", bg="dark olive green", fg="#DEB887",cursor="plus",
-                                          command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
+                                          activebackground="dark olive green", command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
                 else:
                     button_check = Button(frame1, text=" PRZEJDŹ DO KOLEJNEJ RUNDY ", bg="dark olive green", fg="#DEB887",cursor="plus",
-                                          command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
+                                          activebackground="dark olive green", command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
                 button_check.grid( ipady=8, ipadx=4, pady=10)
             else:                                                       # jeśli nie wszystkie słowa zostały wpisane
                 entry_label.configure(text="Wprowadź słowo " +
@@ -184,11 +184,11 @@ def view(frame, words, number_of_words, tura=0):                                
         word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
         word.grid(ipady=30)
         if number_of_words > 1:
-            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",cursor="plus",
+            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",cursor="plus",activebackground="dark olive green",
                             command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
             button.grid(stick=E, ipady=8, ipadx=4, pady=10)
         else:
-            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",cursor="plus",
+            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",cursor="plus",activebackground="dark olive green",
                             command=lambda: enter_words(frame1, tura, words[1:], 1, 0))
             button.grid(stick=E, ipady=8, ipadx=4, pady=10)
             return
@@ -210,7 +210,7 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
         time.sleep(t)
         view_on_time(frame1, i, words[1:], n - 1, t)
     else:
-        button = Button(frame1, text=" Sprawdź, ile pamiętasz >>",bg="dark olive green", fg="#DEB887",
+        button = Button(frame1, text=" Sprawdź, ile pamiętasz >>",bg="dark olive green", fg="#DEB887",activebackground="dark olive green",
                         font=("Arial", 14,), cursor="plus",command=lambda: enter_words(frame1, i, words, 2, t))
         button.grid(stick=E, ipady=8, ipadx=4, pady=15)
     frame1.mainloop()
@@ -288,23 +288,30 @@ def game():
 
     label1 = Label(buttonframe, text="\nWybierz poziom trudności z jakim chesz grać:\n",bg="dark olive green", font=("Arial", 18), width=40)
     label1.grid(pady=10)
-    rad1 = Radiobutton(buttonframe, text='Łatwy',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=1)
+    rad1 = Radiobutton(buttonframe, text='Łatwy',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=1, activebackground="olive",)
     rad1.grid()
-    rad2 = Radiobutton(buttonframe, text='Średni',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=2)
+    rad2 = Radiobutton(buttonframe, text='Średni',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=2, activebackground="olive",)
     rad2.grid()
-    rad3 = Radiobutton(buttonframe, text='Trudny',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=3)
+    rad3 = Radiobutton(buttonframe, text='Trudny',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=3, activebackground="olive",)
     rad3.grid()
     empty = Label(buttonframe, text = "", bg="olive",)
     empty.grid()
 
-    label2 = Label(buttonframe, text="\n...oraz tryb gry:\n",font=("Arial", 18),bg="dark olive green", width=40)
+    label2 = Label(buttonframe, text="\n...oraz tryb gry:\n",font=("Arial", 18),bg="dark olive green",
+                   width=40, activebackground="olive",)
     label2.grid(pady=10)
-    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=1)
+    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek',font=("Arial", 14),bg="olive",cursor="plus", variable=var2,
+                       value=1, activebackground="olive",)
     rad4.grid()
-    rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=2)
+    rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2,
+                       value=2, activebackground="olive",)
     rad5.grid()
 
-    button = Button(buttonframe, text="DALEJ", fg="#DEB887", bg="dark olive green", font=("Arial", 12), cursor="plus",
+    button = Button(buttonframe, text="DALEJ", fg="#DEB887", bg="dark olive green", font=("Arial", 12),
+                    cursor="plus",activebackground="dark olive green",
                     command=lambda: zabawa(buttonframe, var1.get(), var2.get()) if var1.get() != 0 and var2.get() != 0
                     else print("nie wybrano poziomu lub trybu"))
     button.grid(sticky=E, ipady=5, ipadx=10)
@@ -329,13 +336,13 @@ def statistics():
     label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,), bg="dark olive green", width=25,)
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
-                          fg="#DEB887", width=15, cursor="plus", command=lambda: reset_statistics())
+                          fg="#DEB887", width=15, cursor="plus",activebackground="dark olive green", command=lambda: reset_statistics())
 
     label_wyniki = Label(buttonframe, text=f.read(), bg="olive", font=("Arial", 13))
     f.close()
 
     button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
-                    cursor="plus", command=lambda: clear(buttonframe, 0))
+                    cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
 
 #kolejność wyświetlania widgetów
     buttonframe.pack(side=TOP, pady=45)
@@ -352,7 +359,8 @@ def rules():
     buttonframe.pack(side=TOP)
     buttonframe.configure(bg="olive")
     label = Label(buttonframe, text=f.read(), justify=LEFT, wraplength=700, font=("Arial", 18, "italic"), bg="olive")
-    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus", bg="dark olive green", command=lambda: clear(buttonframe, 0))
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus",
+                    bg="dark olive green",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
     label.grid(pady=10)
     button.grid(ipady=2, padx=5, sticky=E)
 
@@ -367,19 +375,19 @@ def begin():
     label.grid(row=0, ipady=5, pady=0, padx=5)
 
     button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 1))
+                     fg = "#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 1))
     button1.grid(row=1, ipady=10, pady=10, padx=5)
 
     button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 2))
+                     fg = "#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 2))
     button2.grid(row=2, ipady=10, pady=10, padx=5)
 
     button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda:  clear(buttonframe, 3))
+                     fg = "#DEB887", width=20, cursor="plus", activebackground="dark olive green", command=lambda:  clear(buttonframe, 3))
     button3.grid(row=3, ipady=10, pady=10, padx=5)
 
     button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24),bg = "dark olive green",
-                     fg="#DEB887", width=20, cursor="plus", command=quit)
+                     fg="#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=quit)
     button4.grid(row=4, ipady=10, pady=10, padx=5)
 
 
