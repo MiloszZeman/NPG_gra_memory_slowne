@@ -185,7 +185,7 @@ def view(frame, words, number_of_words, tura=0):                                
                             command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
             button.grid(stick=E, ipady=8, ipadx=4, pady=10)
         else:
-            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",
+            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",cursor="plus",
                             command=lambda: enter_words(frame1, tura, words[1:], 1, 0))
             button.grid(stick=E, ipady=8, ipadx=4, pady=10)
             return
@@ -195,19 +195,21 @@ def view(frame, words, number_of_words, tura=0):                                
 def view_on_time(frame, i, words, n, t):                           # wyświetlanie słów w trybie "na czas"
     frame.destroy()
     frame1 = Frame(window)
-    frame1.grid()
+    frame1.configure(background="olive")
+    frame1.pack(side=TOP, pady=80)
     if n > 0:
-        label = Label(frame1, text="Tura " + str(i + 1), font=("Arial", 24,))
-        label.grid()
-        word = Label(frame1, text=words[0])
-        word.grid()
+        label = Label(frame1, text="To jest runda nr " + str(i + 1),  font=("Arial", 24,), bg="dark olive green", width=25)
+        label.grid(ipady=20, ipadx=50)
+        word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
+        word.grid(ipady=30)
         print(words[0])
         window.update()
         time.sleep(t)
         view_on_time(frame1, i, words[1:], n - 1, t)
     else:
-        button = Button(frame1, text="Sprawdź ile pamiętasz", command=lambda: enter_words(frame1, i, words, 2, t))
-        button.grid()
+        button = Button(frame1, text=" Sprawdź, ile pamiętasz >>",bg="dark olive green", fg="#DEB887",
+                        font=("Arial", 14,), cursor="plus",command=lambda: enter_words(frame1, i, words, 2, t))
+        button.grid(stick=E, ipady=8, ipadx=4, pady=15)
     frame1.mainloop()
 
 
