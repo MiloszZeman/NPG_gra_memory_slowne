@@ -60,34 +60,37 @@ def submit_user_name_and_points(frame):
     frame.destroy()
 
     frame1 = Frame(window)                                                     # utwórz ramkę
+    frame1.configure(background="olive")
+    frame1.pack(side=TOP, pady=80)
 
-    your_score_label = Label(frame1, text="Twój wynik:", font=("Arial", 24))   # napis "Twój wynik"
+    your_score_label = Label(frame1, text="Brawo! Twój wynik to:", font=("Arial", 24), bg="dark olive green", width=25)   # napis "Twój wynik"
 
     # łańcuch znaków odpowiednio zformatowny w celu wyświetlania punktacjii
-    score_display_string = "\tWynik tury nr 1: " + str(score[0])\
-        + " pkt\n\tWynik tury nr 2: " + str(score[1])\
-        + " pkt\n\tWynik tury nr 3: " + str(score[2])\
+    score_display_string = "\nWynik tury nr 1: " + str(score[0])\
+        + " pkt\nWynik tury nr 2: " + str(score[1])\
+        + " pkt\nWynik tury nr 3: " + str(score[2])\
         + " pkt\n\n"
 
     score = []
 
-    score_label = Label(frame1, text=score_display_string, font=("Arial", 24), justify=LEFT)  # wyświetlenie punktacji
+    score_label = Label(frame1, text=score_display_string, font=("Arial", 16), bg="olive")  # wyświetlenie punktacji
 
-    enter_name_label = Label(frame1, text="Wprowadź swoje imię:", font=("Arial", 24))         # teskt "Wprowadź imię"
+    enter_name_label = Label(frame1, text="Wprowadź swoje imię:", font=("Arial", 24), bg="dark olive green", width=25)         # teskt "Wprowadź imię"
 
-    enter_name_field = Entry(frame1)                                                          # pole do wpisania nazwy
+    enter_name_field = Entry(frame1, width=15, font=("Arial", 18,))                                                          # pole do wpisania nazwy
 
     # przycisk do zapisania punkacjii i powroti do menu głównego
-    submit_button = Button(frame1, text="Zapisz i wróć do menu",
-                           command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
+    submit_button = Button(frame1, text=" ZAPISZ I POWRÓĆ DO MENU ", fg="#DEB887", font=("Arial", 12), bg="dark olive green",
+                    cursor="plus", activebackground="dark olive green", command=lambda: save_score_to_file(frame1, enter_name_field.get(), score_display_string))
 
     # Kolejność rysowania poszczególnych widgetów
-    frame1.grid()
-    your_score_label.grid()
+
+    your_score_label.grid(ipady=20, ipadx=50)
     score_label.grid()
-    enter_name_label.grid()
-    enter_name_field.grid()
-    submit_button.grid()
+    enter_name_label.grid(ipady=20, ipadx=50)
+    enter_name_field.grid(pady=25)
+    submit_button.grid(ipady=3, padx=6, stick=E)
+
     frame1.mainloop()
 
 
@@ -123,12 +126,12 @@ def enter_words(frame, tura, words, mode, t):
                 entry_field.grid_remove()                               # usuń pole do wpisywania
                 entry_field.unbind("<Return>")                          # nie pozwalaj na użycie klawisza "enter"
                 if tura == 2:
-                    button_check = Button(frame1, text="Sprawdź swoje wyniki!",
-                                          command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
+                    button_check = Button(frame1, text=" SPRAWDŹ SWOJE WYNIKI ", bg="dark olive green", fg="#DEB887",cursor="plus",
+                                          activebackground="dark olive green", command=lambda: check())      # przycisk prowadzący do sprawdzania odpowiedzi
                 else:
-                    button_check = Button(frame1, text="Przejdź do następnej tury",
-                                          command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
-                button_check.grid()
+                    button_check = Button(frame1, text=" PRZEJDŹ DO KOLEJNEJ RUNDY ", bg="dark olive green", fg="#DEB887",cursor="plus",
+                                          activebackground="dark olive green", command=lambda: check())  # przycisk prowadzący do sprawdzania odpowiedzi
+                button_check.grid( ipady=8, ipadx=4, pady=10)
             else:                                                       # jeśli nie wszystkie słowa zostały wpisane
                 entry_label.configure(text="Wprowadź słowo " +
                                       str(1 + len(entered_words_array)) + ":")  # zakutalizuj text przed polem
@@ -151,16 +154,20 @@ def enter_words(frame, tura, words, mode, t):
             next_word(on_time[2])
 
     frame1 = Frame(window)
-    frame1.grid()
+    frame1.pack(side=TOP, pady=80)
+    frame1.configure(bg="olive")
 
     entered_words_array = []                                    # utworzenie tablicy słów wpisanych przez gracza
 
     entry_label = Label(frame1, text="Wprowadź słowo " + str(1+len(entered_words_array)) + ":",
-                        font=("Arial", 24,))                    # tekst "wprowadź słowo"
-    entry_label.grid()
+                        font=("Arial", 24,), width=25, bg="dark olive green")                    # tekst "wprowadź słowo"
+    entry_label.grid(ipady=20, ipadx=50)
 
-    entry_field = Entry(frame1)                                 # pole do wpisywania
-    entry_field.grid()
+    empty_label = Label(frame1, text="\n\n", bg="olive")                    # pusty label dla zachowania odstępów
+    empty_label.grid()
+
+    entry_field = Entry(frame1, width=15, font=("Arial", 18,))                                 # pole do wpisywania
+    entry_field.grid(pady=20)
 
     entry_field.bind("<Return>", lambda event: enter_pressed())            # "enter" do zapisania słowa
     entry_field.bind("<F1>", lambda event: print(entered_words_array))     # f1 do wyświetlenie listy słów <dev_key>
@@ -170,19 +177,20 @@ def view(frame, words, number_of_words, tura=0):                                
     frame.destroy()
     if number_of_words > 0:
         frame1 = Frame(window)
-        frame1.grid()
-        label = Label(frame1, text="Tura " + str(tura + 1), font=("Arial", 24,))
-        label.grid()
-        word = Label(frame1, text=words[0])
-        word.grid()
+        frame1.configure(background="olive")
+        frame1.pack(side=TOP, pady=80)
+        label_tura = Label(frame1, text="To jest runda nr " + str(tura + 1), font=("Arial", 24,), bg="dark olive green", width=25)
+        label_tura.grid( ipady=20, ipadx=50)
+        word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
+        word.grid(ipady=30)
         if number_of_words > 1:
-            button = Button(frame1, text="Następne słowo >>",
+            button = Button(frame1, text=" NASTĘPNE SŁOWO >>", bg="dark olive green", fg="#DEB887",cursor="plus",activebackground="dark olive green",
                             command=lambda: view(frame1, words[1:], number_of_words - 1, tura))
-            button.grid()
+            button.grid(stick=E, ipady=8, ipadx=4, pady=10)
         else:
-            button = Button(frame1, text="Sprawdź ile pamiętasz!",
+            button = Button(frame1, text=" SPARAWDŹ, ILE PAMIĘTASZ ", bg="dark olive green", fg="#DEB887",cursor="plus",activebackground="dark olive green",
                             command=lambda: enter_words(frame1, tura, words[1:], 1, 0))
-            button.grid()
+            button.grid(stick=E, ipady=8, ipadx=4, pady=10)
             return
         frame1.mainloop()
 
@@ -190,19 +198,21 @@ def view(frame, words, number_of_words, tura=0):                                
 def view_on_time(frame, i, words, n, t):                           # wyświetlanie słów w trybie "na czas"
     frame.destroy()
     frame1 = Frame(window)
-    frame1.grid()
+    frame1.configure(background="olive")
+    frame1.pack(side=TOP, pady=80)
     if n > 0:
-        label = Label(frame1, text="Tura " + str(i + 1), font=("Arial", 24,))
-        label.grid()
-        word = Label(frame1, text=words[0])
-        word.grid()
+        label = Label(frame1, text="To jest runda nr " + str(i + 1),  font=("Arial", 24,), bg="dark olive green", width=25)
+        label.grid(ipady=20, ipadx=50)
+        word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
+        word.grid(ipady=30)
         print(words[0])
         window.update()
         time.sleep(t)
         view_on_time(frame1, i, words[1:], n - 1, t)
     else:
-        button = Button(frame1, text="Sprawdź ile pamiętasz", command=lambda: enter_words(frame1, i, words, 2, t))
-        button.grid()
+        button = Button(frame1, text=" Sprawdź, ile pamiętasz >>",bg="dark olive green", fg="#DEB887",activebackground="dark olive green",
+                        font=("Arial", 14,), cursor="plus",command=lambda: enter_words(frame1, i, words, 2, t))
+        button.grid(stick=E, ipady=8, ipadx=4, pady=15)
     frame1.mainloop()
 
 
@@ -271,8 +281,6 @@ def game():
     global var2
     buttonframe = Frame(window)
     buttonframe.configure(bg="olive")
-    # buttonframe.grid()
-             # grid działa zamiennie z pack ALE aktualnie można wcisnąć "dalej" bez zaznaczania żadnej opcji
     buttonframe.pack(side=TOP, pady=70, ipady=10)
 
     var1 = IntVar()
@@ -280,23 +288,30 @@ def game():
 
     label1 = Label(buttonframe, text="\nWybierz poziom trudności z jakim chesz grać:\n",bg="dark olive green", font=("Arial", 18), width=40)
     label1.grid(pady=10)
-    rad1 = Radiobutton(buttonframe, text='Łatwy',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=1)
+    rad1 = Radiobutton(buttonframe, text='Łatwy',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=1, activebackground="olive",)
     rad1.grid()
-    rad2 = Radiobutton(buttonframe, text='Średni',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=2)
+    rad2 = Radiobutton(buttonframe, text='Średni',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=2, activebackground="olive",)
     rad2.grid()
-    rad3 = Radiobutton(buttonframe, text='Trudny',font=("Arial", 14),bg="olive",cursor="plus", variable=var1, value=3)
+    rad3 = Radiobutton(buttonframe, text='Trudny',font=("Arial", 14),bg="olive",cursor="plus", variable=var1,
+                       value=3, activebackground="olive",)
     rad3.grid()
     empty = Label(buttonframe, text = "", bg="olive",)
     empty.grid()
 
-    label2 = Label(buttonframe, text="\n...oraz tryb gry:\n",font=("Arial", 18),bg="dark olive green", width=40)
+    label2 = Label(buttonframe, text="\n...oraz tryb gry:\n",font=("Arial", 18),bg="dark olive green",
+                   width=40, activebackground="olive",)
     label2.grid(pady=10)
-    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=1)
+    rad4 = Radiobutton(buttonframe, text='Na ilość fiszek',font=("Arial", 14),bg="olive",cursor="plus", variable=var2,
+                       value=1, activebackground="olive",)
     rad4.grid()
-    rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2, value=2)
+    rad5 = Radiobutton(buttonframe, text='Na czas',font=("Arial", 14),bg="olive",cursor="plus", variable=var2,
+                       value=2, activebackground="olive",)
     rad5.grid()
 
-    button = Button(buttonframe, text="DALEJ", fg="#DEB887", bg="dark olive green", font=("Arial", 12), cursor="plus",
+    button = Button(buttonframe, text="DALEJ", fg="#DEB887", bg="dark olive green", font=("Arial", 12),
+                    cursor="plus",activebackground="dark olive green",
                     command=lambda: zabawa(buttonframe, var1.get(), var2.get()) if var1.get() != 0 and var2.get() != 0
                     else print("nie wybrano poziomu lub trybu"))
     button.grid(sticky=E, ipady=5, ipadx=10)
@@ -316,21 +331,36 @@ def clear(frame, number_of_button_pressed):                             # rozdzi
 def statistics():
     f = open("statystyki.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
-    buttonframe.grid()
-    label = Label(buttonframe, text=f.read())
+    buttonframe.configure(bg="olive")
+
+    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,), bg="dark olive green", width=25,)
+
+    button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
+                          fg="#DEB887", width=15, cursor="plus",activebackground="dark olive green", command=lambda: reset_statistics())
+
+    label_wyniki = Label(buttonframe, text=f.read(), bg="olive", font=("Arial", 13))
     f.close()
-    button = Button(buttonframe, text="Wróć", fg="green", width=20, command=lambda: clear(buttonframe, 0))
-    label.grid()
-    button.grid()
+
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
+                    cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
+
+#kolejność wyświetlania widgetów
+    buttonframe.pack(side=TOP, pady=45)
+
+    label_statistic.grid(ipady=20, ipadx=50, columnspan=2, row=0)
+    button_reset.grid(pady=25, sticky=E,column=1, row=1)
+    button.grid(ipady=7, sticky=E, column=1, row=2)
+    label_wyniki.grid(ipadx=70, ipady=15, column=0,row=1, rowspan=30)
 
 
 def rules():
-    f = open("zasady gry.txt", "r", encoding="utf-8")
+    f = open("zasady_gry.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
     buttonframe.pack(side=TOP)
     buttonframe.configure(bg="olive")
     label = Label(buttonframe, text=f.read(), justify=LEFT, wraplength=700, font=("Arial", 18, "italic"), bg="olive")
-    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus", bg="dark olive green", command=lambda: clear(buttonframe, 0))
+    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus",
+                    bg="dark olive green",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
     label.grid(pady=10)
     button.grid(ipady=2, padx=5, sticky=E)
 
@@ -345,24 +375,21 @@ def begin():
     label.grid(row=0, ipady=5, pady=0, padx=5)
 
     button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 1))
+                     fg = "#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 1))
     button1.grid(row=1, ipady=10, pady=10, padx=5)
 
     button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda: clear(buttonframe, 2))
+                     fg = "#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 2))
     button2.grid(row=2, ipady=10, pady=10, padx=5)
 
     button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), bg="dark olive green",
-                     fg = "#DEB887", width=20, cursor="plus", command=lambda:  clear(buttonframe, 3))
+                     fg = "#DEB887", width=20, cursor="plus", activebackground="dark olive green", command=lambda:  clear(buttonframe, 3))
     button3.grid(row=3, ipady=10, pady=10, padx=5)
 
     button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24),bg = "dark olive green",
-                     fg="#DEB887", width=20, cursor="plus", command=quit)
+                     fg="#DEB887", width=20, cursor="plus",activebackground="dark olive green", command=quit)
     button4.grid(row=4, ipady=10, pady=10, padx=5)
 
-    button5 = Button(buttonframe, text="Resetuj statystyki", font=("Arial", 24), fg="red", width=20,
-                     command=lambda: reset_statistics())
-    button5.grid(row=5, ipady=10, pady=10, padx=5)
 
 
 ########################################################################################################################
@@ -377,10 +404,6 @@ window.title("Gra w Memory")
 window.geometry("800x600")
 window.configure(background="olive")
 
-
-# photo = PhotoImage(file="tablica.png")                        # dodaje obrazek, ale nie działa jako tło
-# photobest = Label(window, image=photo, bd=0)
-# photobest.pack()
 
 
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
