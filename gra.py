@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import messagebox
 from pygame import mixer
 from datetime import datetime
-
+from PIL import ImageTk, Image
 
 def word_count():
     global database
@@ -402,7 +402,13 @@ mixer.music.play(-1)
 window = Tk()
 window.title("Gra w Memory")
 window.geometry("800x600")
-window.configure(background="olive")
+image2 = Image.open("menu.jpg")
+image1 = ImageTk.PhotoImage(image2)
+background_label = Label(window, image=image1)
+background_label.image1=image1
+background_label.place(x=0, y=0, height=800, width=1600)
+
+
 
 
 
