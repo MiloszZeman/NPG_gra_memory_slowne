@@ -329,28 +329,42 @@ def clear(frame, number_of_button_pressed):                             # rozdzi
 
 
 def statistics():
-    statistics_file = open("statystyki.txt", "r", encoding="utf-8")
-    buttonframe = Frame(window)
+
+    statistics_file = open("statystyki.txt", "r", encoding="utf-8")  #
+    statistics_text = statistics_file.read()                         #
+    statistics_file.close()                                          # ODCZYT I ZAMKNIĘCIE TEKSTU Z PLIKU
+
+    buttonframe = Frame(window)             # GLÓWNE OKNO
     buttonframe.configure(bg="olive")
 
-    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,), bg="dark olive green", width=25,)
+    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,),
+                            bg="dark olive green", width=25,)  # NAPIS TYTULOWY
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
-                          fg="#DEB887", width=15, cursor="plus",activebackground="dark olive green", command=lambda: reset_statistics())
+                          fg="#DEB887", width=15, cursor="plus", activebackground="dark olive green",
+                          command=lambda: reset_statistics())  # PRZYCISK RESETOWANIA STATYSTYK
 
-    label_wyniki = Label(buttonframe, text=statistics_file.read(), bg="olive", font=("Arial", 13))
-    statistics_file.close()
+    statistics_window = Text(buttonframe)               # UTOWORZENIE 'PODOKNA' DO WSPIANIA TESKTU Z STATYSTYK
+    statistics_window.insert("1.0", statistics_text)    # WSPIANIE TEKSTU Z STATYSTYK DO 'PODOKNA'
+
+    scrollbar = Scrollbar(buttonframe)                  # UTWORZENIE SROLLBARA ( oczywiste no nie? :) )
+
+    scrollbar.config(command=statistics_window.yview)                            # COKOLWIEK TO ROBI, DZIĘKI TEMU
+    statistics_window.config(yscrollcommand=scrollbar.set, background="olive")   # SCROLLOWANIE DZIALA
 
     button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
-                    cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
+                    cursor="plus", activebackground="dark olive green",
+                    command=lambda: clear(buttonframe, 0))  # PRZYSICK POWROTU DO MENU GLÓWNEGO
 
-#kolejność wyświetlania widgetów
+    # KOLEJNOŚC WYŚWIETLANIA WIDGETÓW
+
     buttonframe.pack(side=TOP, pady=45)
 
     label_statistic.grid(ipady=20, ipadx=50, columnspan=2, row=0)
-    button_reset.grid(pady=25, sticky=E,column=1, row=1)
+    button_reset.grid(pady=25, sticky=E, column=1, row=1)
     button.grid(ipady=7, sticky=E, column=1, row=2)
-    label_wyniki.grid(ipadx=70, ipady=15, column=0,row=1, rowspan=30)
+    statistics_window.grid(ipadx=70, ipady=15, column=0, row=1, rowspan=30)
+    scrollbar.grid(ipady=15)
 
 
 def rules():
