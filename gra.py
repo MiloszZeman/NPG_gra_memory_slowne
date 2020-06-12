@@ -329,7 +329,7 @@ def clear(frame, number_of_button_pressed):                             # rozdzi
 
 
 def statistics():
-    f = open("statystyki.txt", "r", encoding="utf-8")
+    statistics_file = open("statystyki.txt", "r", encoding="utf-8")
     buttonframe = Frame(window)
     buttonframe.configure(bg="olive")
 
@@ -338,8 +338,8 @@ def statistics():
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
                           fg="#DEB887", width=15, cursor="plus",activebackground="dark olive green", command=lambda: reset_statistics())
 
-    label_wyniki = Label(buttonframe, text=f.read(), bg="olive", font=("Arial", 13))
-    f.close()
+    label_wyniki = Label(buttonframe, text=statistics_file.read(), bg="olive", font=("Arial", 13))
+    statistics_file.close()
 
     button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
                     cursor="plus",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
