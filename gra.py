@@ -368,15 +368,25 @@ def statistics():
 
 
 def rules():
-    f = open("zasady_gry.txt", "r", encoding="utf-8")
-    buttonframe = Frame(window)
-    buttonframe.pack(side=TOP)
-    buttonframe.configure(bg="olive")
-    label = Label(buttonframe, text=f.read(), justify=LEFT, wraplength=700, font=("Arial", 18, "italic"), bg="olive")
-    button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),cursor="plus",
-                    bg="dark olive green",activebackground="dark olive green", command=lambda: clear(buttonframe, 0))
-    label.grid(pady=10)
-    button.grid(ipady=2, padx=5, sticky=E)
+
+    rules_file = open("zasady_gry.txt", "r", encoding="utf-8")  #
+    rules_text = rules_file.read()                              #
+    rules_file.close()                                          # ODCZYT TEKSTU Z PLIKU
+
+    buttonframe = Frame(window)         #
+    buttonframe.pack(side=TOP)          #
+    buttonframe.configure(bg="olive")   # OKNO GLÓWNE
+
+    rules_label = Label(buttonframe, text=rules_text, justify=LEFT, wraplength=700,
+                  font=("Arial", 18, "italic"), bg="olive")  # WYŚWIETLANIE TREŚCI PLIKU Z ZASADAMI
+
+    return_button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),
+                           cursor="plus", bg="dark olive green", activebackground="dark olive green",
+                           command=lambda: clear(buttonframe, 0))  # PRZYCISK POWROTU
+
+    # ROZMIESZCZENIE WIDGETÓW
+    rules_label.grid(pady=10)
+    return_button.grid(ipady=2, padx=5, sticky=E)
 
 
 def begin():
