@@ -346,6 +346,7 @@ def statistics():
 
     statistics_window = Text(buttonframe)               # UTOWORZENIE 'PODOKNA' DO WSPIANIA TESKTU Z STATYSTYK
     statistics_window.insert("1.0", statistics_text)    # WSPIANIE TEKSTU Z STATYSTYK DO 'PODOKNA'
+    statistics_window.config(state="disabled")          # BLOKOWANIE MOŻLIWOŚCI EDYCJI
 
     scrollbar = Scrollbar(buttonframe)                  # UTWORZENIE SROLLBARA ( oczywiste no nie? :) )
 
