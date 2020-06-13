@@ -358,14 +358,14 @@ def statistics():
                           fg="#DEB887", width=15, cursor="plus", activebackground="dark olive green",
                           command=lambda: reset_statistics())  # PRZYCISK RESETOWANIA STATYSTYK
 
-    statistics_window = Text(buttonframe)               # UTOWORZENIE 'PODOKNA' DO WSPIANIA TESKTU Z STATYSTYK
-    statistics_window.insert("1.0", statistics_text)    # WSPIANIE TEKSTU Z STATYSTYK DO 'PODOKNA'
-    statistics_window.config(state="disabled")          # BLOKOWANIE MOŻLIWOŚCI EDYCJI
+    statistics_window = Text(buttonframe, background="olive")    # UTOWORZENIE 'PODOKNA' DO WSPIANIA TESKTU Z STATYSTYK
+    statistics_window.insert("1.0", statistics_text)             # WSPIANIE TEKSTU Z STATYSTYK DO 'PODOKNA'
+    statistics_window.config(state="disabled")                   # BLOKOWANIE MOŻLIWOŚCI EDYCJI
 
     scrollbar = Scrollbar(buttonframe)                  # UTWORZENIE SROLLBARA ( oczywiste no nie? :) )
 
-    scrollbar.config(command=statistics_window.yview)                            # COKOLWIEK TO ROBI, DZIĘKI TEMU
-    statistics_window.config(yscrollcommand=scrollbar.set, background="olive")   # SCROLLOWANIE DZIALA
+    scrollbar.config(command=statistics_window.yview)        # COKOLWIEK TO ROBI, DZIĘKI TEMU
+    statistics_window.config(yscrollcommand=scrollbar.set)   # SCROLLOWANIE DZIALA
 
     button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12), bg="dark olive green", width=15,
                     cursor="plus", activebackground="dark olive green",
@@ -405,29 +405,34 @@ def rules():
 
 
 def begin():
-    buttonframe = Frame(window)
-    
-    buttonframe.pack(side=TOP)
-    buttonframe.configure(background="olive")
 
+    buttonframe = Frame(window)
+    buttonframe.pack(side=TOP)                      #
+    buttonframe.configure(background="olive")       # OKNO GLÓWNE
+
+    # WIADOAMOŚC TYTULOWA
     label = Label(buttonframe, text="\nWitaj w grze MEMORY\n", font=("Arial", 30,), bg="olive")
     label.grid(row=0, ipady=5, pady=0, padx=5)
 
+    # PRZYCISK ZACZNIJ GRĘ
     button1 = Button(buttonframe, text="Zacznij grę", font=("Arial", 24), bg="dark olive green",
                      fg="#DEB887", width=20, cursor="plus", activebackground="dark olive green",
                      command=lambda: clear(buttonframe, 1))
     button1.grid(row=1, ipady=10, pady=10, padx=5)
 
+    # PRZYCISK STATYSTYKI
     button2 = Button(buttonframe, text="Statystyki", font=("Arial", 24), bg="dark olive green",
                      fg="#DEB887", width=20, cursor="plus", activebackground="dark olive green",
                      command=lambda: clear(buttonframe, 2))
     button2.grid(row=2, ipady=10, pady=10, padx=5)
 
+    # PRZYCISK ZASADY GRY
     button3 = Button(buttonframe, text="Zasady gry", font=("Arial", 24), bg="dark olive green",
                      fg="#DEB887", width=20, cursor="plus", activebackground="dark olive green",
                      command=lambda:  clear(buttonframe, 3))
     button3.grid(row=3, ipady=10, pady=10, padx=5)
 
+    # PRZYCISK WYJDŹ
     button4 = Button(buttonframe, text="Wyjdź", font=("Arial", 24), bg="dark olive green",
                      fg="#DEB887", width=20, cursor="plus", activebackground="dark olive green", command=quit)
     button4.grid(row=4, ipady=10, pady=10, padx=5)
