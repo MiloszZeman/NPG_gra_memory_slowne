@@ -445,11 +445,11 @@ mixer.music.play(-1)
 window = Tk()
 window.title("Gra w Memory")
 window.geometry("800x600")
-image2 = Image.open("menu.jpg")
+image2 = Image.open("krata.jpg")
 image1 = ImageTk.PhotoImage(image2)
 background_label = Label(window, image=image1)
 background_label.image1 = image1
-background_label.place(x=0, y=0, height=800, width=1600)
+background_label.place(x=0, y=0)
 
 
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów
