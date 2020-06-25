@@ -206,8 +206,8 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
     frame1.configure(background="olive")
     frame1.pack(side=TOP, pady=55, padx=60, fill="both", expand=True)
     if n > 0:
-        label = Label(frame1, text="To jest runda nr " + str(i + 1),  font=("Arial", 18), bg="dark olive green",
-                      width=35)
+        label = Label(frame1, text="To jest runda nr " + str(i + 1),  font=("Arial", 22), bg="dark olive green",
+                      width=30)
         label.pack(pady=35, ipady=15)
         word = Label(frame1, text=words[0], font=("Arial", 36,), bg="olive")
         word.pack(ipady=30)
@@ -348,7 +348,7 @@ def statistics():
     buttonframe = Frame(window)             # GLÓWNE OKNO
     buttonframe.configure(bg="olive")
 
-    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,),
+    label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 22,),
                             bg="dark olive green", width=30)  # NAPIS TYTULOWY
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
