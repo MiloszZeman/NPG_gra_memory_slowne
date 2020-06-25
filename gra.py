@@ -349,17 +349,17 @@ def statistics():
     buttonframe.configure(bg="olive")
 
     label_statistic = Label(buttonframe, text="Twoje dotychczasowe osiągnięcia:", font=("Arial", 24,),
-                            bg="dark olive green", width=25,)  # NAPIS TYTULOWY
+                            bg="dark olive green", width=30)  # NAPIS TYTULOWY
 
     button_reset = Button(buttonframe, text="RESETUJ\nSTATYSTYKI", font=("Arial", 12), bg="dark olive green",
                           fg="#DEB887", width=15, cursor="plus", activebackground="dark olive green",
                           command=lambda: reset_statistics())  # PRZYCISK RESETOWANIA STATYSTYK
 
-    statistics_window = Text(buttonframe, background="olive")    # UTOWORZENIE 'PODOKNA' DO WSPIANIA TESKTU Z STATYSTYK
+    statistics_window = Text(buttonframe, background="olive", width=40, height=12.5 )    # UTOWORZENIE 'PODOKNA' DO WPISANIA TESKTU ZE STATYSTYK
     statistics_window.insert("1.0", statistics_text)             # WSPIANIE TEKSTU Z STATYSTYK DO 'PODOKNA'
     statistics_window.config(state="disabled")                   # BLOKOWANIE MOŻLIWOŚCI EDYCJI
 
-    scrollbar = Scrollbar(buttonframe)                  # UTWORZENIE SROLLBARA ( oczywiste no nie? :) )
+    scrollbar = Scrollbar(buttonframe, )                  # UTWORZENIE SROLLBARA ( oczywiste no nie? :) )
 
     scrollbar.config(command=statistics_window.yview)        # COKOLWIEK TO ROBI, DZIĘKI TEMU
     statistics_window.config(yscrollcommand=scrollbar.set)   # SCROLLOWANIE DZIALA
@@ -372,11 +372,15 @@ def statistics():
 
     buttonframe.pack(side=TOP, pady=55, padx=60, fill="both", expand=True)
 
-    label_statistic.grid(ipady=20, ipadx=50, columnspan=2, row=0)
-    button_reset.grid(pady=25, sticky=E, column=1, row=1)
-    button.grid(ipady=7, sticky=E, column=1, row=2)
-    statistics_window.grid(ipadx=70, ipady=15, column=0, row=1, rowspan=30)
-    scrollbar.grid(ipady=15)
+    label_statistic.pack(pady=35, ipady=15)
+
+    statistics_window.pack(padx=(50, 0), pady=(0, 35), fill=Y, side=LEFT)
+    scrollbar.pack(ipady=15, pady=(0, 35), side=LEFT, fill=Y)
+
+
+    button_reset.pack(padx=(0, 50), anchor=NE)
+    button.pack(pady=35, padx=(0, 50), ipady=9, anchor=NE)
+
 
 
 def rules():
