@@ -370,7 +370,7 @@ def statistics():
 
     # KOLEJNOŚC WYŚWIETLANIA WIDGETÓW
 
-    buttonframe.pack(side=TOP, pady=45)
+    buttonframe.pack(side=TOP, pady=55, padx=60, fill="both", expand=True)
 
     label_statistic.grid(ipady=20, ipadx=50, columnspan=2, row=0)
     button_reset.grid(pady=25, sticky=E, column=1, row=1)
@@ -386,19 +386,19 @@ def rules():
     rules_file.close()                                          # ODCZYT TEKSTU Z PLIKU
 
     buttonframe = Frame(window)         #
-    buttonframe.pack(side=TOP)          #
+    buttonframe.pack(side=TOP, pady=55, padx=60, fill="both", expand=True)          #
     buttonframe.configure(bg="olive")   # OKNO GLÓWNE
 
-    rules_label = Label(buttonframe, text=rules_text, justify=LEFT, wraplength=700,
-                        font=("Arial", 18, "italic"), bg="olive")  # WYŚWIETLANIE TREŚCI PLIKU Z ZASADAMI
+    rules_label = Label(buttonframe, text=rules_text, justify=LEFT, wraplength=680,
+                        font=("Arial", 15, "italic"), bg="olive")  # WYŚWIETLANIE TREŚCI PLIKU Z ZASADAMI
 
-    return_button = Button(buttonframe, text="POWRÓT", fg="#DEB887", width=20, font=("Arial", 12, "italic"),
+    return_button = Button(buttonframe, text="POWRÓT", fg="#DEB887", font=("Arial", 12, "italic"),
                            cursor="plus", bg="dark olive green", activebackground="dark olive green",
                            command=lambda: clear(buttonframe, 0))  # PRZYCISK POWROTU
 
     # ROZMIESZCZENIE WIDGETÓW
-    rules_label.grid(pady=10)
-    return_button.grid(ipady=2, padx=5, sticky=E)
+    rules_label.pack(pady=20, ipadx=7)
+    return_button.pack(side=RIGHT, ipady=1, ipadx=7, padx=75)
 
 
 def begin():
@@ -449,7 +449,7 @@ image2 = Image.open("krata.jpg")
 image1 = ImageTk.PhotoImage(image2)
 background_label = Label(window, image=image1)
 background_label.image1 = image1
-background_label.place(x=0, y=0)
+background_label.place(x=-400, y=0, height=800, width=1800)
 
 
 flashcards = [5, 8, 10]                                         # ilosć słów do wyświetlnia dla poszczególnych poziomów

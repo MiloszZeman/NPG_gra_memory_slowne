@@ -1,9 +1,9 @@
 	Pewnie jesteś ciekawy co i jak:
 
-	Masz do wyboru trzy trudności. Wierzymy, że z łatwym sobie poradzisz bez problemu, ale trudny może stanowić niemałe wyzwanie.
+	Masz do wyboru trzy trudności. Wierzymy, że z łatwym poradzisz sobie bez problemu, ale trudny może stanowić niemałe wyzwanie.
 
-	Każdy tryb niesie ze sobą możliwość gry na czas lub na ilość. Wybierając ilość potwierdzasz, że zapamiętałeś słówko naciskając dowolny klawisz, natomiast w czasowym nie ma tak łatwo - fiszki po kilku sekundach same uciekają, więc musisz się śpieszyć.
+	Każdy tryb niesie ze sobą możliwość gry na czas lub na ilość. Wybierając ilość potwierdzasz, że zapamiętałeś słówko naciskając klawisz "enter", natomiast w czasowym nie ma tak łatwo - fiszki po kilku sekundach same uciekają, więc musisz się śpieszyć.
 
-	W ramach rozgrywki wykażesz się w trzech turach, po każdej zobaczysz swoje błędy. Pilnuj żeby nie zaniedbać sobie choćby jednego słówka, bo wszytko będzie uwzględnione w statystykach, więc wstyd już niestety pozostanie. (Po całej grze będziesz mógł porównać swoje wyniki z poprzednimi podejściami.)
+	W ramach rozgrywki wykażesz się w trzech turach. Pilnuj żeby nie zaniedbać sobie choćby jednego słówka, bo wszytko będzie uwzględnione w statystykach, więc wstyd już niestety pozostanie. (Po całej grze będziesz mógł porównać swoje wyniki z poprzednimi podejściami.)
 
 	Trzymamy za Ciebie kciuki i życzymy powodzenia :D
