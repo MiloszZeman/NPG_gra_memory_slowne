@@ -216,10 +216,13 @@ def view_on_time(frame, i, words, n, t):                           # wyświetlan
         time.sleep(t)
         view_on_time(frame1, i, words[1:], n - 1, t)
     else:
+        label_tura = Label(frame1, text="Wyświetlono wszystkie słowa", font=("Arial", 22,),
+                           bg="dark olive green", width=30)
+        label_tura.pack(pady=35,ipady=15)
         button = Button(frame1, text=" Sprawdź, ile pamiętasz >>", bg="dark olive green", fg="#DEB887",
                         activebackground="dark olive green", font=("Arial", 12,), cursor="plus",
                         command=lambda: enter_words(frame1, i, words, 2, t))
-        button.pack(anchor=NE, ipady=8, ipadx=4, pady=90, padx=60)
+        button.pack(side=RIGHT, ipady=5, ipadx=10, padx=90)
     frame1.mainloop()
 
 
